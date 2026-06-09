@@ -13,7 +13,7 @@ img{
 }
 
 .logo{
-    width: 155px;
+    width: 125px;
 }
 
 .nav-link{
@@ -42,15 +42,16 @@ img{
   
 }
 
+ .section-padding {
+            padding: 100px 0;
+        }
 
 .navbar a{
   color: #e0e2de !important;
   letter-spacing:2px;
   font-size:13px;
 }
-.logo{
-    width: 140px;
-}
+
 
 .btn-reserva-main{
   background: #4d5d42;
@@ -101,7 +102,7 @@ img{
 
 /* fondo */
 .hero-bg{
-  background:url('/img-olivo/hero-olivo.jpg') center/cover no-repeat;
+  background:url('/img-olivo/hero-olivo.webp') center/cover no-repeat;
   z-index:1;
 }
 
@@ -149,6 +150,19 @@ img{
   
 }
 
+ .card-dark {
+            background-color: #121212;
+            border: 1px solid #2a2a2a;
+            border-radius: 0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card-dark:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.05);
+            border-color: #555;
+        }
+
 #imgsection{
   padding-right: 0px !important;
   padding-left: 0px !important;
@@ -177,6 +191,18 @@ img{
   color:#f1f1f1;
 }
 
+ h1, h2, h3, .navbar-brand {
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        /* Navbar oscura con borde inferior sutil */
+        .navbar-custom {
+            background-color: rgba(0, 0, 0, 0.9);
+            border-bottom: 1px solid #222;
+        }
 
 
 /* SECTIONS */
@@ -357,12 +383,45 @@ img{
     margin-top:4rem !important;
     margin-bottom:4rem !important;
 }
+
+.navbar{
+    background-color: #4d5d42 !important;
+    padding:12px 0;
+}
+
+.navbar-collapse{
+    padding:20px;
+}
+
+.navbar-nav{
+    gap:10px;
+}
+
+.nav-link{
+    letter-spacing:2px !important;
+}
+
+.logo{
+    width:110px;
+}
+
+.navbar-collapse{
+    padding:20px;
+    background:#4d5d42;
+}
+.nav-link{
+    letter-spacing:2px !important;
+}
+
+.logo{
+    width:110px;
+}
 }
 
 @media (max-width:576px){
 
 .hero-title{
-    font-size:2.8rem;
+    font-size:1.8rem;
 }
 
 .hero-sub{
@@ -372,8 +431,6 @@ img{
 .section h2{
     font-size:1.7rem;
 }
-}
-
 .hero-ultra{
     position:relative;
     min-height:100svh;
@@ -408,16 +465,46 @@ img{
     font-size:clamp(1rem,2vw,1.5rem);
     margin-bottom:2rem;
 }
+}
+@media (max-width:992px){
 
-@media (max-width:991px){
-
-.navbar{
-    background:rgba(0,0,0,.95);
-    padding:12px 0;
+.section{
+    padding:40px 0;
 }
 
+.section h2{
+    font-size:2rem;
+    text-align: center !important;
+}
+
+.section p{
+    text-align: start !important;
+    font-size:.95rem;
+    margin-bottom: 4rem;
+}
+
+.separate-2{
+    margin-top:3rem !important;
+    margin-bottom:3rem !important;
+}
+
+.separate-3{
+    margin-top:4rem !important;
+    margin-bottom:4rem !important;
+}
+
+    .navbar{
+    max-width: 100%;
+    transition: 0.4s;
+    background: #4d5d42 !important;    
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+}
+
+
 .navbar-collapse{
-    padding:20px;
+    padding:25px !important;
+    margin-right: 28px !important;
 }
 
 .navbar-nav{
@@ -429,7 +516,111 @@ img{
 }
 
 .logo{
+    width:150px;
+    background: transparent !important
+}
+#imgsection{
+  width: 100%;
+}
+#gastronomia-title{
+  text-align: center !important;
+}
+
+#reserva{
+  text-align: center !important;
+  justify-content: center;
+}
+h2{
+  text-align: center !important;
+}
+#propuesta div{
+  width: 100%;
+  text-align: center;
+}
+#text_propuesta{
+  padding: 2rem !important;
+  width: 100%;
+  text-align: center;
+}
+
+}
+  @media (max-width:576px){
+
+.hero-sub{
+    font-size:1rem;
+}
+
+.section h2{
+    font-size:1.7rem;
+}
+
+
+.hero-ultra{
+    position:relative;
+    min-height:100svh;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding-top:90px;
+    padding-bottom:40px;
+}
+
+.hero-content{
+    position:relative;
+    z-index:5;
+    color:#fff;
+    width:100%;
+    max-width:1200px;
+    margin:auto;
+    padding:1rem;
+}
+
+.hero-title{
+    font-family:'Playfair Display', serif;
+    font-weight:800 !important;
+    font-size:1.6rem !important;
+    letter-spacing:1rem !important;
+    line-height:1.1;
+    margin-bottom:1rem;
+}
+
+.hero-sub{
+    font-size:clamp(1rem,2vw,1.5rem);
+    margin-bottom:2rem;
+}
+
+.navbar{
+    max-width: 100%;
+    transition: 0.4s;
+    background: #4d5d42 !important;    
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+}
+.section p {
+        text-align: center !important;
+        font-size: .95rem;
+        margin-bottom: 4rem;
+      }
+
+      #text_propuesta h2 {
+        padding-right: 0rem !important;
+        width: 100%;
+        text-align: center;
+      }
+
+      .logo{
     width:110px;
+    background: transparent !important
 }
+
+#title-2{
+  font-size: 1.4rem !important;
 }
+
+}
+
+
+
+
 
