@@ -212,6 +212,37 @@
 </div>
 </section>
 
+<section class="py-5">
+  <div class="section text-center mt-5 mb-5" data-aos="fade-up" data-aos-duration="1000">
+    <div class="container">
+      <h2 class="mb-4 mt-3">OUR RECOGNITIONS</h2> 
+    </div>
+  </div>
+  <div class="container">
+    <div class="row g-4 justify-content-center">
+      
+      <!-- Primera Imagen -->
+      <div class="col-12 col-md-6 col-lg-5">
+        <div class="card h-100 border-0 shadow-sm overflow-hidden">
+          <div class="img-hover-container">
+            <img src="/img-olivo/guru_pizza.webp" class="img-fluid w-100 h-100 object-fit-cover" alt="Recomendado Restaurant Guru Il Olivo">
+          </div>
+        </div>
+      </div>
+
+      <!-- Segunda Imagen -->
+      <div class="col-12 col-md-6 col-lg-5">
+        <div class="card h-100 border-0 shadow-sm overflow-hidden">
+          <div class="img-hover-container">
+            <img src="/img-olivo/guru_recomendado.webp" class="img-fluid w-100 h-100 object-fit-cover" alt="Recomendado Restaurant Guru Il Olivo">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <section class="text-center mt-5 mb-5" id="reservas">
   <h2 class="text-center mb-2" id="title-2">Book your experience</h2>
   <p class="text-center mb-5">An unforgettable gastronomic journey</p>

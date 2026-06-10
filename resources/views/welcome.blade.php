@@ -25,7 +25,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" media="print" onload="this.media='all'">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" media="print" onload="this.media='all'">
 </head>
+<style>
+  .img-hover-container {
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 3 / 4; /* Mantiene la proporción vertical similar a tu imagen */
+  }
 
+  .img-hover-container img {
+    transition: transform 0.3s ease-in-out;
+  }
+
+  /* Efecto hover sencillo: escala la imagen un 5% */
+  .img-hover-container:hover img {
+    transform: scale(1.05);
+  }
+</style>
 <body>
 
 <nav class="navbar navbar-expand-lg fixed-top">
@@ -109,7 +124,7 @@
       <div class="modal-body">
         <a target="_blank" href="/carta/carta_esp.pdf" class=" fw-bolder text-white "> <i class="fas fa-utensils"></i> VER CARTA DE MENÚ</a><br><br>
         <a target="_blank" href="/carta/carta_vinos.pdf" class="fw-bolder text-white "> <i class="fas fa-wine-glass-empty"></i> VER CARTA DE VINOS</a><br><br>
-        <a target="_blank" href="/carta/carta_bar.pdf" class=" fw-bolder text-white "> <i class="fas fa-wine-bottle"></i> VER CARTA DE VINOS</a><br><br>
+        <a target="_blank" href="/carta/carta_bar.pdf" class=" fw-bolder text-white "> <i class="fas fa-wine-bottle"></i> VER CARTA DE BAR</a><br><br>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn btn-light bt-lg" data-bs-dismiss="modal">C E R R A R</button>         
@@ -211,6 +226,38 @@
   </button>
 </div>
 </section>
+
+<section class="py-5">
+  <div class="section text-center mt-5 mb-5" data-aos="fade-up" data-aos-duration="1000">
+    <div class="container">
+      <h2 class="mb-4 mt-3">NUESTROS RECONOCIMIENTOS</h2> 
+    </div>
+  </div>
+  <div class="container">
+    <div class="row g-4 justify-content-center">
+      
+      <!-- Primera Imagen -->
+      <div class="col-12 col-md-6 col-lg-5">
+        <div class="card h-100 border-0 shadow-sm overflow-hidden">
+          <div class="img-hover-container">
+            <img src="/img-olivo/guru_pizza.webp" class="img-fluid w-100 h-100 object-fit-cover" alt="Recomendado Restaurant Guru Il Olivo">
+          </div>
+        </div>
+      </div>
+
+      <!-- Segunda Imagen -->
+      <div class="col-12 col-md-6 col-lg-5">
+        <div class="card h-100 border-0 shadow-sm overflow-hidden">
+          <div class="img-hover-container">
+            <img src="/img-olivo/guru_recomendado.webp" class="img-fluid w-100 h-100 object-fit-cover" alt="Recomendado Restaurant Guru Il Olivo">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 
 <section class="text-center mt-5 mb-5" id="reservas">
   <h2 class="text-center mb-2" id="title-2">Reserva tu experiencia</h2>
