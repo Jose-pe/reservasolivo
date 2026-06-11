@@ -66,8 +66,8 @@
       width:92px;
       height:92px;
       border-radius:50%;
-      border:5px solid #29c259;
-      color:#29c259;
+      border:5px solid #ffffff;
+      color:#ffffff;
       font-size:3rem;
       display:flex;
       justify-content:center;
@@ -79,14 +79,14 @@
       font-family:'Cormorant Garamond', serif;
       font-size:3.8rem;
       font-weight:600;
-      color:#1f1f1f;
+      color:#ffffff;
       text-align:center;
       margin-bottom:12px;
     }
 
     .subtitle{
       text-align:center;
-      color:#9a9a9a;
+      color:#dbdbdb;
       font-size:1.05rem;
       margin-bottom:38px;
     }

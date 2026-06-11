@@ -217,7 +217,7 @@
     </div>
 
   </div>
-    <p id="userPhone"> {{$phone_usuario}} </p>
+    <p id="userPhone" style="color:rgba(0, 0, 0, 0)"> {{$phone_usuario}} </p>
     <script src="/js/preferencias.js"></script>
    <script src="/js/bootstrap.js"></script>
   <script src="/js/bootstrap.bundle.js"></script>

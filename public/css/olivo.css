@@ -384,8 +384,7 @@ img{
 }
 
 .navbar{
-    background-color: #4d5d42 !important;
-    padding:12px 0;
+    background-color: #4d5d42 !important;    
 }
 
 .navbar-collapse{
@@ -609,7 +608,8 @@ h2{
       }
 
       .logo{
-    width:110px;
+    width:90px;
+    padding: 0px;
     background: transparent !important
 }
 
