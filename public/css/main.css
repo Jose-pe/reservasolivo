@@ -4,7 +4,7 @@
     body{
       margin:0;
       min-height:100vh;
-      background:url('https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=1600&auto=format&fit=crop') center center/cover no-repeat;
+      background:url('/img/hero-olivo-r.webp') center center/cover no-repeat;
       display:flex;
       justify-content:center;
       align-items:center;
@@ -15,7 +15,7 @@
     .main-card{
       width:100%;
       max-width:720px;
-      background:#f6f6f6;
+      background:#4f5f44;
       border-radius:24px;
       overflow:hidden;
       box-shadow:0 20px 60px rgba(0,0,0,.25);
@@ -49,7 +49,7 @@
 
     .top-icon{
       text-decoration:none;
-      color:#111;
+      color:#ffffff;
       font-size:1rem;
       display:flex;
       align-items:center;
@@ -67,13 +67,13 @@
       font-size:4rem;
       font-weight:600;
       text-align:center;
-      color:#111;
+      color:#ffffff;
       margin-bottom:10px;
     }
 
     .subtitle{
       text-align:center;
-      color:#8b8b8b;
+      color:#dfdede;
       font-size:1.1rem;
       margin-bottom: 15px;
     }
@@ -101,9 +101,9 @@
     }
 
     .guest-card.active{
-      background:black;
+      background:#1a2511;
       color:white;
-      border-color:black;
+      border-color:rgb(255, 255, 255);
       box-shadow:0 10px 20px rgba(0,0,0,.15);
     }
 
@@ -186,7 +186,7 @@
     .btn-continue{
       width:100%;
       border:none;
-      background:black;
+      background:#1a2511 !important;
       color:white;
       height:70px;
       border-radius:16px;
@@ -347,7 +347,7 @@
 }
 
 .date-card.active{
-  border:2px solid #1db954;
+  border:2px solid #000000;
   box-shadow:0 10px 20px rgba(0,0,0,.08);
 }
 
@@ -388,7 +388,7 @@
   border:none;
   background:transparent;
   font-size:1.2rem;
-  color:#555;
+  color:#ffffff !important;
   display:inline-flex;
   align-items:center;
   gap:12px;
@@ -408,11 +408,11 @@
 }
 
 #calendarBody td:hover {
-  background-color: #f8f9fa;
+  background-color: #0b7a1dbd;
 }
 
 #calendarBody td.selected {
-  background-color: #0d6efd !important;
+  background-color: #1f4d0a !important;
   color: white;
   font-weight: bold;
 }

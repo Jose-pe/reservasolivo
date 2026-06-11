@@ -11,7 +11,7 @@
 
   <!-- Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-<link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/main.css">
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
@@ -34,8 +34,8 @@
         </div>
 
         <div class="col-6">
-          <div class="logo">
-                       <img src="img/logo-catedral.png" alt="">
+          <div class="logo p-2">
+                       <img src="img/logo-catedral.png" width="145px" height="auto" alt="Il olivo restaurant">
 
           </div>
         </div>

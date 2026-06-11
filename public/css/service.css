@@ -3,7 +3,7 @@
     body{
       margin:0;
       min-height:100vh;
-      background:url('https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=1600&auto=format&fit=crop') center center/cover no-repeat;
+      background:url('/img/hero-olivo-r.webp') center center/cover no-repeat;
       display:flex;
       justify-content:center;
       align-items:center;
@@ -14,7 +14,7 @@
     .main-card{
       width:100%;
       max-width:720px;
-      background:#f7f7f7;
+      background:#4f5f44 !important;
       border-radius:24px;
       overflow:hidden;
       box-shadow:0 20px 60px rgba(0,0,0,.25);
@@ -84,21 +84,21 @@
       font-family:'Cormorant Garamond', serif;
       font-size:4rem;
       text-align:center;
-      color:#111;
+      color:#ffffff !important;
       margin-bottom:8px;
       font-weight:600;
     }
 
     .subtitle{
       text-align:center;
-      color:#999;
+      color:#e2e2e2;
       margin-bottom:28px;
       font-size:1.05rem;
     }
 
     .arrow-icon{
       text-align:center;
-      color:#c0c0c0;
+      color:#ffffff !important;
       font-size:1.2rem;
       margin-bottom:18px;
     }

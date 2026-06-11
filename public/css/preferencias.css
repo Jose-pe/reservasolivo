@@ -2,7 +2,7 @@
   body{
       margin:0;
       min-height:100vh;
-      background:url('https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=1600&auto=format&fit=crop') center center/cover no-repeat;
+      background:url('/img/hero-olivo-r.webp') center center/cover no-repeat;
        display:flex;
        justify-content:center;
        align-items:center;     
@@ -13,7 +13,7 @@
     .main-card{
       width:100%;
       max-width:860px;
-      background:#f7f7f7;
+      background:#4f5f44 !important;
       border-radius:26px;
       overflow:hidden;
       box-shadow:0 20px 60px rgba(0,0,0,.25);
@@ -47,7 +47,7 @@
 
     .top-icon{
       text-decoration:none;
-      color:#111;
+      color:#ffffff !important;
       font-size:1rem;
       display:flex;
       align-items:center;
@@ -84,13 +84,13 @@
       font-size:4rem;
       text-align:center;
       font-weight:600;
-      color:#1d1d1d;
+      color:#ffffff;
       margin-bottom:12px;
     }
 
     .subtitle{
       text-align:center;
-      color:#9b9b9b;
+      color:#d8d8d8;
       font-size:1.15rem;
       margin-bottom:65px;
     }
@@ -113,7 +113,7 @@
     .option-label{
       font-size:1.9rem;
       font-weight:500;
-      color:#222;
+      color:#ffffff;
     }
 
     /* TOGGLE */
@@ -183,7 +183,7 @@
 
     .kids-label{
       font-size:1.5rem;
-      color:#555;
+      color:#ffffff;
     }
 
     .counter{
@@ -222,7 +222,7 @@
       height:72px;
       border:none;
       border-radius:18px;
-      background:black;
+      background:#1a2511 !important;
       color:white;
       font-size:1.3rem;
       font-weight:700;
