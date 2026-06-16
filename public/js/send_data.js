@@ -14,7 +14,10 @@ document
     // =========================
     // OBTENER DATOS
     // =========================
-
+    reserveBtn.innerHTML = `
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Cargando...
+      `;
     const guests =
       localStorage.getItem('campoGuests');
 
@@ -115,7 +118,7 @@ if (dateOriginal) {
             headers:{
               "Content-Type": "application/json",
               "Accept": "application/json, text-plain, */*",
-              "X-Requested-Whith": "XMLHttpRequest",
+              "X-Requested-With": "XMLHttpRequest",
               "X-CSRF-TOKEN": token,
             },
 
@@ -138,6 +141,8 @@ if (dateOriginal) {
                // limpiar localstorage opcional
          //localStorage.clear();
         reserveBtn.disabled = true;
+         // 3. Inyectar el spinner de Bootstrap 5 y el texto nuevo
+      
         // redireccionar
         window.location.href = "/finalizar_reserva";
         
@@ -182,3 +187,5 @@ if (dateOriginal) {
     }
 
   });
+
+  

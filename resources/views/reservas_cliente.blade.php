@@ -91,18 +91,15 @@
 
       </div>
 
-   
+     <div class="footer p-2" style=" background:black !important; ">
+      Powered by <strong  style="color: #15D7B5 !important;"> MOD STUDIO</strong>
+    </div>
      
 
     </div>
 
     <!-- FOOTER -->
-    <div class="footer">
-
-      Powered by <strong>Jose Luis Corazao</strong>
-
-    </div>
-
+   
   </div>
 
 </body>

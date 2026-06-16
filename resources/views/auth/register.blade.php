@@ -115,10 +115,9 @@
           Completar registro
         </button>
         </form>
-     <div class="powered">
-      Powered by <strong>Jose Luis Corazao</strong>
-    </div>
+     
       </div>
+       
     </div>
 
       <!-- FOOTER -->

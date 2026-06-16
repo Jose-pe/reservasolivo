@@ -137,13 +137,13 @@
 
       <!-- FOOTER -->
      
-
+  <div class="footer" style=" background:black !important; ">
+      Powered by <strong  style="color: #15D7B5 !important;"> MOD STUDIO</strong>
+    </div>
     </div>
 
     <!-- POWERED -->
-    <div class="powered">
-      Powered by <strong>Jose Luis Corazao</strong>
-    </div>
+
 
   </div>
 <script src="/js/telefono.js"></script>

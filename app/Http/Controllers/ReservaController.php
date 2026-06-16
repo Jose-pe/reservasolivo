@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
+use App\Mail\MiEmail;
+use Illuminate\Support\Facades\Mail;
 
 class ReservaController extends Controller
 {
@@ -97,11 +99,14 @@ class ReservaController extends Controller
         }else{
          $reservation = Reserva::create($input);
         
+
+         
+    
         return response()->json([
 
             'success' => true,
 
-            'message' => 'Reserva creada',
+            'message' => 'Reserva creada y correo enviado',
 
             'reservation' => $reservation
 
@@ -252,6 +257,19 @@ class ReservaController extends Controller
     public function show(Reserva $reserva)
     {
         //
+    }
+
+    public function email_confirmacion_reserva($id)
+    {
+          // Busca la reserva por el ID que necesitas
+        $id= 42;
+        $reserva = Reserva::findOrFail($id);
+       
+        $email = Auth::user()->email;
+    // Envía el correo al email de la reserva
+     Mail::to($email)->queue(new MiEmail($reserva));
+
+    return response()->json(['message' => 'Correo enviado con éxito'], 201);
     }
 
     /**

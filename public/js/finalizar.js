@@ -1,5 +1,7 @@
 
-
+let token = document
+        .querySelector('meta[name="csrf-token"]')
+        .getAttribute("content");
     // =========================
     // OBTENER DATOS
     // =========================
@@ -104,7 +106,11 @@
 
     document
       .getElementById('finishBtn')
-      .addEventListener('click', ()=>{       
+      .addEventListener('click', ()=>{    
+        
+        
+            
+        
         // limpiar opcional
         // localStorage.clear();
         localStorage.removeItem('campoService');
@@ -113,6 +119,8 @@
         localStorage.removeItem('campoHour');
         localStorage.removeItem('campoGuests');
         localStorage.removeItem('campoDate');
+
+
 
        window.location.href = "/cliente_dashboard"
 

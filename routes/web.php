@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\ReservaController;
+use App\Http\Controllers\EmailController;
 use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -29,7 +30,7 @@ Route::get('/finalizar_reserva', [App\Http\Controllers\ReservaController::class,
 Route::get('/reservas_error', [App\Http\Controllers\ReservaController::class, 'reservas_error'])->name('reservas_error');
 Route::get('/reservas_telefono', [App\Http\Controllers\ReservaController::class, 'reservas_telefono'])->name('reservas_telefono');
 Route::get('/cliente_dashboard', [App\Http\Controllers\ReservaController::class, 'cliente_dashboard'])->middleware('auth')->name('cliente_dashboard');
-Route::post('/reserva_delete/{id}', [App\Http\Controllers\ReservaController::class, 'destroy'])->middleware('auth')->name('reserva_delete');
+Route::get('/reserva_delete/{id}', [App\Http\Controllers\ReservaController::class, 'destroy'])->middleware('auth')->name('reserva_delete');
 
 
 Route::get('/admin_login', [App\Http\Controllers\ReservaController::class, 'admin_login'])->name('admin_login');
@@ -45,7 +46,7 @@ Route::put('/admin_update_reserva/{id}', [App\Http\Controllers\ReservaController
 Route::get('/admin_filtrar_email', [App\Http\Controllers\ReservaController::class, 'admin_filtrar_email'])->middleware('auth','admin')->name('admin_filtrar_email');
 Route::get('/admin_filtrar_fecha', [App\Http\Controllers\ReservaController::class, 'admin_filtrar_fecha'])->middleware('auth','admin')->name('admin_filtrar_fecha');
 Route::get('/admin_filtrar_etiqueta', [App\Http\Controllers\ReservaController::class, 'admin_filtrar_etiqueta'])->middleware('auth','admin')->name('admin_filtrar_etiqueta');
-
+//Route::get('/enviar_mail_confirmacion/{id}', [App\Http\Controllers\ReservaController::class, 'email_confirmacion_reserva'])->middleware('auth')->name('enviar_mail_confirmacion');
 
 Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle']);
 Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
