@@ -137,9 +137,7 @@
 
       <!-- FOOTER -->
      
-  <div class="footer" style=" background:black !important; ">
-      Powered by <strong  style="color: #15D7B5 !important;"> MOD STUDIO</strong>
-    </div>
+  
     </div>
 
     <!-- POWERED -->
