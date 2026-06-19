@@ -61,14 +61,14 @@
                         {{-- E-mail --}}
                         <div class="mb-3">
                             <label for="email" class="form-label text-muted fw-semibold mb-1">E-mail</label>
-                            <input type="email" class="form-control form-control-modern @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email', $reserva->email) }}" required>
+                            <input type="email" class="form-control form-control-modern @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email', $reserva->email) }}">
                             @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
                         {{-- Teléfono --}}
                         <div class="mb-3">
                             <label for="telefono" class="form-label text-muted fw-semibold mb-1">Teléfono</label>
-                            <input type="tel" class="form-control form-control-modern @error('telefono') is-invalid @enderror" id="phone" name="phone" value="{{ old('phone', $reserva->phone) }}" required>
+                            <input type="tel" class="form-control form-control-modern @error('telefono') is-invalid @enderror" id="phone" name="phone" value="{{ old('phone', $reserva->phone) }}">
                             @error('phone') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
