@@ -118,7 +118,9 @@
                             <option value="Grupo de guias">Grupo de guias</option>
                             <option value="Invitación">Invitación</option>        
                             <option value="Servicio Regular">Servicio Regular</option>  
-                            <option value="Reserva web">Reserva Web</option>              
+                            <option value="Reserva web">Reserva Web</option>  
+                            <option value="Menú Turistico">Menú Turistico</option>
+                            <option value="Menú Premium">Menú Premium</option>             
                             </select>
             <button class="btn btn-primary" type="submit">Buscar</button>
             </div>
