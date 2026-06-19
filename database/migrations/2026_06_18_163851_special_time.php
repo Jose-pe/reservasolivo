@@ -12,20 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('reservas', function (Blueprint $table) {
-             User::create([
-            'name' => 'Reservas_General',
-            'email' => 'reservas@campanayoc.com',
-            'role' => 'admin',
-            'password' => Hash::make('reservas-campanayoc-081'),
-        ]);
-
-         User::create([
-            'name' => 'Comercial_General',
-            'email' => 'comercial@campanayoc.com',
-            'role' => 'admin',
-            'password' => Hash::make('comercial-campanayoc-079'),
-        ]);
-
+        $table->string('special_time')->nullable()->default('Nada especial');        
         });
     }
 
