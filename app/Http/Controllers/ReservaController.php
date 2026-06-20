@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use App\Mail\MiEmail;
 use Illuminate\Support\Facades\Mail;
+use App\Exports\ReservasTomorrow;
+use Maatwebsite\Excel\Facades\Excel;
+use Carbon\Carbon;
 
 class ReservaController extends Controller
 {
@@ -310,5 +313,14 @@ class ReservaController extends Controller
        $reserva = Reserva::where('email' , Auth::user()->email)->where('id', $id);
        $reserva->delete();
        return redirect()->route('cliente_dashboard')->with('status','Reserva eliminada');
+    }
+    /* EXPORTAR ECEL DEL DIA DE MAÑANA*/
+    public function reporte_reservas_tomorrow()
+    {
+        // Generamos un nombre dinámico para el archivo con la fecha de mañana
+        $dateStr = Carbon::tomorrow()->format('Y-m-dd');
+        $fileName = "reporte_reservas_ilOlivo{$dateStr}.xlsx";
+
+        return Excel::download(new ReservasTomorrow, $fileName);
     }
 }

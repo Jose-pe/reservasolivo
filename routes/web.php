@@ -48,6 +48,10 @@ Route::get('/admin_filtrar_fecha', [App\Http\Controllers\ReservaController::clas
 Route::get('/admin_filtrar_etiqueta', [App\Http\Controllers\ReservaController::class, 'admin_filtrar_etiqueta'])->middleware('auth','admin')->name('admin_filtrar_etiqueta');
 //Route::get('/enviar_mail_confirmacion/{id}', [App\Http\Controllers\ReservaController::class, 'email_confirmacion_reserva'])->middleware('auth')->name('enviar_mail_confirmacion');
 
+Route::get('/reservas_reporte', [App\Http\Controllers\ReservaController::class, 'reporte_reservas_tomorrow'])->middleware('auth','admin')->name('reservas_reporte');
+
+
+
 Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle']);
 Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 Route::post('/logoutgoogle', function (Request $request) {
