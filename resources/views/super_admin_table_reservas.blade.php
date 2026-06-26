@@ -33,9 +33,9 @@
     <div class="col-12 p-0 sidebar">
       <h4 class="text-center py-4">🍽 Admin</h4>
       <a href="{{ route('admin_dashboard') }}"><i class="fa-solid fa-gauge-high fa-lg" style="color: rgb(255, 255, 255);"></i> Dashboard</a>
-       <a class="active" href="{{route('admin_filtros')}}"><i class="fa-solid fa-filter fa-lg" style="color: rgb(255, 255, 255);"></i> Más filtros</a>
-      <a  href="{{route('show_superadmin_reservas')}}"><i class="fa-solid fa-users fa-lg" style="color: rgb(255, 255, 255);"></i> Ver registro de actividades</a>
-      {{--<a onclick="showSection('horarios')"><i class="bi bi-clock"></i> Horarios</a>--}}
+      <a   href="{{route('admin_filtros')}}"><i class="fa-solid fa-filter fa-lg" style="color: rgb(255, 255, 255);"></i> Más filtros</a>
+      <a  class="active" href="{{route('show_superadmin_reservas')}}"><i class="fa-solid fa-users fa-lg" style="color: rgb(255, 255, 255);"></i> Ver registro de actividades</a>
+
       {{-- <a onclick="showSection('mesas')"><i class="bi bi-table"></i> Mesas</a>
      <a onclick="showSection('horarios')"><i class="bi bi-clock"></i> Horarios</a>--}}
     </div>
@@ -85,7 +85,7 @@
         <div class="card-header d-flex justify-content-between align-items-center">
            <div class="col-4 text-start m-3">
             
-            <form action="{{route('admin_filtrar_email')}}" method="get">
+            <form action="{{route('super_admin_filtrar_email')}}" method="get">
                  @csrf
                 @method('GET')
             <div class="input-group mb-3">
@@ -96,7 +96,7 @@
             </form>
         </div>
         <div class="col-4 text-start m-3">
-           <form action="{{route('admin_filtrar_fecha')}}" method="get">
+           <form action="{{route('super_admin_filtrar_fecha')}}" method="get">
              @csrf
              @method('GET')
             <div class="input-group mb-3">
@@ -108,26 +108,22 @@
 
         </div>
         <div class="col-4 d-flex justify-content-start m-3">
-         <form action="{{route('admin_filtrar_etiqueta')}}" method="get">
+         <form action="{{route('admin_filtrar_by_admin')}}" method="get">
                 @csrf
                 @method('GET')
              <div class="input-group mb-3">
-             <span class="input-group-text fw-bolder">Filtrar por etiqueta</span>
-             <select class="form-control" id="label" name="label" required>
-             <option value="" selected disabled>Seleccione la etiqueta</option>
-                            <option value="FITS">FITS</option>
-                            <option value="Grupo de agencias">Grupo de agencias</option>
-                            <option value="Grupo de guias">Grupo de guias</option>
-                            <option value="Invitación">Invitación</option>        
-                            <option value="Servicio Regular">Servicio Regular</option>  
-                            <option value="Reserva web">Reserva Web</option>  
-                            <option value="Menú Turistico">Menú Turistico</option>
-                            <option value="Menú Premium">Menú Premium</option>             
-                            </select>
+             <span class="input-group-text fw-bolder">Filtrar por Usuario</span>
+             <select class="form-control" id="id_admin" name="id_admin" required>
+             <option value="" selected disabled>Seleccione el usuario</option>
+                            <option value="admin@ilolivo.com">admin@ilolivo.com</option>
+                            <option value="reservas@campanayoc.com">reservas@campanayoc.com</option>
+                            <option value="comercial@campanayoc.com">comercial@campanayoc.com</option>
+                        </select>
             <button class="btn btn-primary" type="submit">Buscar</button>
             </div>
             </form>
 
+        </div>
         </div>
        
         
@@ -149,8 +145,9 @@
                 <th>Estado de Pago</th>
                 <th>Etiqueta</th>
                 <th>Estado</th>   
-                <th>Observasiones</th>             
-                <th>Acciones</th>
+                <th>Observasiones</th>     
+                <th>Último Usuario</th>          
+               
               </tr>
             </thead>
             <tbody>
@@ -191,8 +188,9 @@
                 @endif
                
                     <td>{{$reserva->observation}}</td>
+                    <td>{{$reserva->id_admin}}</td>
                 
-                <td>  
+                {{--<td class="p-0">  
                     <form action="{{ route('admin_edit_reserva', ['id' => $reserva->id]) }}" method="GET" style="display:inline-block;">
                     @csrf
                     @method('GET')
@@ -203,9 +201,9 @@
                   <form action="{{ route('admin_delete_reserva', ['id' => $reserva->id]) }}" method="post" style="display:inline-block;">
                     @csrf
                     @method('POST')
-                    <button type="submit" class="btn btn-sm btn-danger"><i class="fa-regular fa-circle-xmark fa-lg" style="color: rgb(255, 255, 255);"></i></button>
+                    <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-circle-xmark" style="color: rgb(255, 255, 255);"></i></button>
                   </form>
-                </td>
+                </td>--}}
               </tr>
               @endforeach
             </tbody>
