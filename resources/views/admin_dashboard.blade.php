@@ -34,11 +34,13 @@
       <h4 class="text-center py-4">🍽 Admin</h4>
       <a class="active" onclick="showSection('dashboard')"><i class="fa-solid fa-gauge-high fa-lg" style="color: rgb(255, 255, 255);"></i> Dashboard</a>
       <a onclick="showSection('reservas_pendientes')"><i class="fa-solid fa-thumbtack fa-lg" style="color: rgb(255, 255, 255);"></i> Reservas pendientes</a>
+      
       <a onclick="showSection('reservas_hoy')"><i class="fa-solid fa-calendar-day fa-lg" style="color: rgb(255, 255, 255);"></i> Reservas creadas hoy</a>
       <a onclick="showSection('reservas')"><i class="fa-solid fa-book fa-lg" style="color: rgb(255, 255, 255);"></i> Reservas Atendidas y Canceladas</a>
+      <a><i class="bi bi-table"></i> Gestionar Mesas y horarios</a>
       <a href="{{route('admin_filtros')}}"><i class="fa-solid fa-filter fa-lg" style="color: rgb(255, 255, 255);"></i> Más filtros</a>
-      {{-- <a onclick="showSection('mesas')"><i class="bi bi-table"></i> Mesas</a>
-     <a onclick="showSection('horarios')"><i class="bi bi-clock"></i> Horarios</a>--}}
+    
+    
     </div>
     </div>
     <!-- Main Content -->
@@ -145,6 +147,7 @@
                 @endif
                 
                 <td> {{$reserva->label}}</td>
+                
                 @if ($reserva->state === 'Pendiente')
                 <td ><a class="badge bg-warning  text-dark  p-2">{{$reserva->state}}</a></td>
                 @endif

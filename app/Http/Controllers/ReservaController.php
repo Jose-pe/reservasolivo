@@ -146,7 +146,7 @@ class ReservaController extends Controller
             $reservas_siguientes = Reserva::whereDate('reservation_date','>' ,now()->toDateString())->where('state', '!=', 'Cancelado')
                 ->orderBy('reservation_date', 'asc')
                 ->orderBy('reservation_time', 'asc')                
-                ->take(20)
+                ->take(40)
                 ->get();
             
             $reservas_pendientes = Reserva::whereDate('reservation_date','>=' ,now()->toDateString())->where('state', 'Pendiente')->orderBy('reservation_date', 'asc')->orderBy('reservation_time', 'asc')->get();
@@ -213,7 +213,9 @@ class ReservaController extends Controller
          if (Auth::user()->role !== 'admin') {
                 return view('welcome');
             }
-        $reservas = Reserva::orderBy('reservation_date', 'asc')->orderBy('reservation_time', 'asc')->get();
+         $reservas = Reserva::latest('reservation_date')
+    ->latest('reservation_time')
+    ->get();
                          
         return view('admin_filtros_dashboard', compact('reservas'));
     }
@@ -244,7 +246,7 @@ class ReservaController extends Controller
                 return view('welcome');
             }
         $etiqueta = $request->input('label');
-        $reservas = Reserva::all()->where('label', '=' , $etiqueta); 
+        $reservas = Reserva::where('label', '=' , $etiqueta)->orderBy('reservation_date', 'desc')->get();
         return view('admin_filtros_dashboard', compact('reservas'));
     }
 
@@ -319,7 +321,7 @@ class ReservaController extends Controller
                     return view('welcome');
                 }
             $id_admin = $request->input('id_admin');
-            $reservas = Reserva::all()->where('id_admin', '=' , $id_admin); 
+            $reservas = Reserva::where('id_admin', '=' , $id_admin)->orderBy('reservation_date', 'desc')->orderBy('reservation_time', 'desc')->get(); 
             return view('super_admin_table_reservas', compact('reservas'));
         }
      public function show_superadmin_reservas()
@@ -328,7 +330,7 @@ class ReservaController extends Controller
                 return view('welcome');
             }
             //reservas para hoy ordenadas por fecha y hora    
-            $reservas = Reserva::orderBy('reservation_date', 'desc')->orderBy('reservation_time', 'desc')->get();
+        $reservas = Reserva::orderBy('reservation_date', 'desc')->orderBy('reservation_time', 'desc')->get();
 
          return view('super_admin_table_reservas', compact('reservas'));
     }
