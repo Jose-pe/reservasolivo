@@ -55,7 +55,8 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav text-start text-lg-start">
         <a class="nav-link" href="#">Inicio</a>
-        <a class="nav-link" href="#galeria">Galería</a>
+        <a class="nav-link" id="link-galeria" href="#galeria">Galería</a>
+        <a class="nav-link" id="link-galeria-mobile" href="#galeria-mobile">Galería</a>
         <a class="nav-link" href="{{route('reservas_comensales')}}">Reservas</a>
         <a class="nav-link" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Ver Menú</a>
         <a class="nav-link" href="#contactanos">Contáctanos</a>    
@@ -168,6 +169,45 @@
     <div class="col-md-4" data-aos="zoom-in-up" data-aos-duration="2000"><img src="/img-olivo/galeria-6.webp" alt="Il Olivo" loading="lazy" width="400" height="300"></div>
   </div>
 </section>
+
+<section id="galeria-mobile">
+   <div class="section text-center" data-aos="fade-up" data-aos-duration="1000">
+    <div class="container">
+      <h2 class="mb-4 mt-3">NUESTRA GALERÍA</h2> 
+    </div>
+  </div>
+<div id="carouselExampleAutoplaying" class="carousel slide m-2" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="img-olivo/galeria-1.webp" class="d-block w-100" alt="Il Olivo Restaurant">
+    </div>
+    <div class="carousel-item">
+      <img src="img-olivo/galeria-2.webp" class="d-block w-100" alt="Il Olivo Restaurant">
+    </div>
+    {{--<div class="carousel-item">
+      <img src="img-olivo/galeria-3.webp" class="d-block w-100" alt="Il Olivo Restaurant">
+    </div>--}}
+     <div class="carousel-item">
+      <img src="img-olivo/galeria-4.webp" class="d-block w-100" alt="Il Olivo Restaurant">
+    </div>
+     <div class="carousel-item">
+      <img src="img-olivo/galeria-5.webp" class="d-block w-100" alt="Il Olivo Restaurant">
+    </div>
+     <div class="carousel-item">
+      <img src="img-olivo/galeria-6.webp" class="d-block w-100" alt="Il Olivo Restaurant">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next"  type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+    <span class="carousel-control-next-icon"   aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+</section>
+
 
 <section class="container px-0 mt-5">
 <p class="text-center">
