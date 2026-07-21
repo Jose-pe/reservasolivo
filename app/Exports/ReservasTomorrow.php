@@ -38,6 +38,7 @@ class ReservasTomorrow implements FromQuery, WithHeadings, WithMapping, ShouldAu
             'Estado Pago',
             'Estado Reserva',
             'Observación',
+            'Usuario Admin',
             
         ];
     }
