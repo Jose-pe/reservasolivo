@@ -194,7 +194,7 @@
 </section>
 
 <section class="container px-0 mt-5">
-<p class="text-center">
+{{--<p class="text-center">
   <button class="btn-reserva text-uppercase" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
        OUR EXPERIENCES <i class="bi bi-chevron-down"></i>
   </button>
@@ -243,7 +243,7 @@
       </div>
     </div>
   </div>
-</div>
+</div>--}}
 <div class="text-center mt-4">
   <button type="button" class="button-cartas pt-4" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
       VIEW MENU
