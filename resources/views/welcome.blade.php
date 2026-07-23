@@ -135,13 +135,26 @@
         <a target="_blank" href="/carta/carta_postres.pdf" class=" fw-bolder text-white "> <i class="bi bi-cake2-fill"></i> VER CARTA DE POSTRES</a><br><br>
         <a target="_blank" href="/carta/carta_vinos.pdf" class="fw-bolder text-white "> <i class="fas fa-wine-glass-empty"></i> VER CARTA DE VINOS</a><br><br>
         <a target="_blank" href="/carta/carta_bar.pdf" class=" fw-bolder text-white "> <i class="fas fa-wine-bottle"></i> VER CARTA DE BAR</a><br><br>
+        <hr>
+       
+
       </div>
-      <div class="modal-footer">
+       <div class="modal-header">
+        <h5 class="modal-title fw-bolder" id="staticBackdropLabel" style="color: #f5f5f5 !important; font-size: 1.5rem;">EMENTA</h5> 
+       </div>
+           <div class="modal-body">
+        <a target="_blank" href="/carta/carta_portu.pdf" class=" fw-bolder text-white "> <i class="fas fa-utensils"></i> VER CARDÁPIO</a><br><br>       
+
+      </div>
+       <div class="modal-footer">
         <button type="button" class="btn btn btn-light bt-lg" data-bs-dismiss="modal">C E R R A R</button>         
       </div>
+
+      </div>
+     
     </div>
   </div>
-</div>
+
 
 <section class="section container-fluid">
   <div class="row align-items-center flex-md-row-reverse" id="propuesta">

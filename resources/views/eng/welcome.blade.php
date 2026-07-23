@@ -121,9 +121,16 @@
         <a target="_blank" href="/carta/carta_bar.pdf" class="fw-bolder text-white "> <i class="fas fa-wine-bottle"></i> VIEW BAR MENU</a><br><br>
         <a target="_blank" href="/carta/carta_vinos.pdf" class="fw-bolder text-white "> <i class="fas fa-wine-glass-empty"></i> VIEW WINES LIST</a><br><br>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn btn-light bt-lg" data-bs-dismiss="modal">C L O S E</button>         
+          <div class="modal-header">
+        <h5 class="modal-title fw-bolder" id="staticBackdropLabel" style="color: #f5f5f5 !important; font-size: 1.5rem;">EMENTA</h5> 
+       </div>
+           <div class="modal-body">
+        <a target="_blank" href="/carta/carta_portu.pdf" class=" fw-bolder text-white "> <i class="fas fa-utensils"></i> VER CARDÁPIO</a><br><br>       
+
       </div>
+       <div class="modal-footer">
+        <button type="button" class="btn btn btn-light bt-lg" data-bs-dismiss="modal">C E R R A R</button>         
+      </div>     
     </div>
   </div>
 </div>
