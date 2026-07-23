@@ -117,9 +117,9 @@
       </div>
       <div class="modal-body">
         <a target="_blank" href="/carta/carta_ingles.pdf" class="fw-bolder text-white"> <i class="fas fa-utensils"></i> VIEW FOOD MENU</a>  <br><br>
-        <a target="_blank" href="/carta/carta_postres.pdf" class=" fw-bolder text-white "> <i class="fas fa-utensils"></i> VIEW DESSERT MENU</a><br><br>
+        <a target="_blank" href="/carta/carta_postres.pdf" class=" fw-bolder text-white "> <i class="bi bi-cake2-fill"></i> VIEW DESSERTS MENU</a><br><br>
         <a target="_blank" href="/carta/carta_bar.pdf" class="fw-bolder text-white "> <i class="fas fa-wine-bottle"></i> VIEW BAR MENU</a><br><br>
-        <a target="_blank" href="/carta/carta_vinos.pdf" class="fw-bolder text-white "> <i class="fas fa-wine-glass-empty"></i> VIEW WINE LIST</a><br><br>
+        <a target="_blank" href="/carta/carta_vinos.pdf" class="fw-bolder text-white "> <i class="fas fa-wine-glass-empty"></i> VIEW WINES LIST</a><br><br>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn btn-light bt-lg" data-bs-dismiss="modal">C L O S E</button>         
@@ -321,7 +321,7 @@
     </div>
     </div>
 </footer>
-
+<script src="/js/main.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
 <script src="https://unpkg.com/aos@next/dist/aos.js" defer></script>
 

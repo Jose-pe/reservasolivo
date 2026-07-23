@@ -31,7 +31,7 @@ Route::get('/reservas_error_admin', [App\Http\Controllers\ReservaController::cla
 Route::get('/reservas_error', [App\Http\Controllers\ReservaController::class, 'reservas_error'])->name('reservas_error');
 Route::get('/reservas_telefono', [App\Http\Controllers\ReservaController::class, 'reservas_telefono'])->name('reservas_telefono');
 Route::get('/cliente_dashboard', [App\Http\Controllers\ReservaController::class, 'cliente_dashboard'])->middleware('auth')->name('cliente_dashboard');
-Route::get('/reserva_delete/{id}', [App\Http\Controllers\ReservaController::class, 'destroy'])->middleware('auth')->name('reserva_delete');
+Route::post('/reserva_delete/{id}', [App\Http\Controllers\ReservaController::class, 'destroy'])->middleware('auth')->name('reserva_delete');
 
 
 Route::get('/admin_login', [App\Http\Controllers\ReservaController::class, 'admin_login'])->name('admin_login');

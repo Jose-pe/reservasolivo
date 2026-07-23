@@ -118,7 +118,8 @@
             {{-- CANCEL --}}
             <div class="cancel-box">
                  <form action="{{route('reserva_delete', $reserva->id)}}" method="post">
-                                @csrf
+                @csrf
+                @method('post')
                 <button
                     class="cancel-btn"
                     id="cancelReservation" 

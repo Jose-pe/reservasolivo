@@ -132,7 +132,7 @@
       </div>
       <div class="modal-body">
         <a target="_blank" href="/carta/carta_esp.pdf" class=" fw-bolder text-white "> <i class="fas fa-utensils"></i> VER CARTA DE MENÚ</a><br><br>
-        <a target="_blank" href="/carta/carta_postres.pdf" class=" fw-bolder text-white "> <i class="fas fa-utensils"></i> VER CARTA DE POSTRES</a><br><br>
+        <a target="_blank" href="/carta/carta_postres.pdf" class=" fw-bolder text-white "> <i class="bi bi-cake2-fill"></i> VER CARTA DE POSTRES</a><br><br>
         <a target="_blank" href="/carta/carta_vinos.pdf" class="fw-bolder text-white "> <i class="fas fa-wine-glass-empty"></i> VER CARTA DE VINOS</a><br><br>
         <a target="_blank" href="/carta/carta_bar.pdf" class=" fw-bolder text-white "> <i class="fas fa-wine-bottle"></i> VER CARTA DE BAR</a><br><br>
       </div>
@@ -338,7 +338,7 @@
     </div>
     </div>
 </footer>
-
+<script src="/js/main.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
 <script src="https://unpkg.com/aos@next/dist/aos.js" defer></script>
 
