@@ -132,6 +132,7 @@
       </div>
       <div class="modal-body">
         <a target="_blank" href="/carta/carta_esp.pdf" class=" fw-bolder text-white "> <i class="fas fa-utensils"></i> VER CARTA DE MENÚ</a><br><br>
+        <a target="_blank" href="/carta/carta_postres.pdf" class=" fw-bolder text-white "> <i class="fas fa-utensils"></i> VER CARTA DE POSTRES</a><br><br>
         <a target="_blank" href="/carta/carta_vinos.pdf" class="fw-bolder text-white "> <i class="fas fa-wine-glass-empty"></i> VER CARTA DE VINOS</a><br><br>
         <a target="_blank" href="/carta/carta_bar.pdf" class=" fw-bolder text-white "> <i class="fas fa-wine-bottle"></i> VER CARTA DE BAR</a><br><br>
       </div>

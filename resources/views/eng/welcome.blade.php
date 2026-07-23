@@ -117,6 +117,7 @@
       </div>
       <div class="modal-body">
         <a target="_blank" href="/carta/carta_ingles.pdf" class="fw-bolder text-white"> <i class="fas fa-utensils"></i> VIEW FOOD MENU</a>  <br><br>
+        <a target="_blank" href="/carta/carta_postres.pdf" class=" fw-bolder text-white "> <i class="fas fa-utensils"></i> VIEW DESSERT MENU</a><br><br>
         <a target="_blank" href="/carta/carta_bar.pdf" class="fw-bolder text-white "> <i class="fas fa-wine-bottle"></i> VIEW BAR MENU</a><br><br>
         <a target="_blank" href="/carta/carta_vinos.pdf" class="fw-bolder text-white "> <i class="fas fa-wine-glass-empty"></i> VIEW WINE LIST</a><br><br>
       </div>
