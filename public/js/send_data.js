@@ -7,10 +7,18 @@
  
  let mailUserPhone = localStorage.getItem('mailUserPhone');
  let googleUserPhone = localStorage.getItem('campoUserPhone');
+ 
+
 document
   .getElementById('reserveBtn')
   .addEventListener('click', async ()=>{
+    let guests = localStorage.getItem('campoGuests');
+      if (guests === 0 ||  guests === null) {
 
+         
+            reserveBtn.disabled = false;
+            window.location.href = "/reservas_error_comensales";
+        }
     // =========================
     // OBTENER DATOS
     // =========================
@@ -18,9 +26,7 @@ document
         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
         Cargando...
       `;
-    const guests =
-      localStorage.getItem('campoGuests');
-
+   
      let phone;
 
       if (mailUserPhone !== "") {
@@ -174,17 +180,20 @@ if (dateOriginal) {
 
       }else{
 
+       
         window.location.href = "/reservas_error";
         reserveBtn.disabled = false;
       }
 
     }catch(error){
 
+     
       console.error(error);
 
       window.location.href = "/reservas_error";
 
-    }
+    
+  }
 
   });
 
