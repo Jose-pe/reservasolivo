@@ -24,7 +24,7 @@ class Reserva extends Model
         'pay_state',
         'state',
         'observation',
-        'id_admin'
-
+        'id_admin',
+        'id_mesa',
     ];
 }

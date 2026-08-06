@@ -17,6 +17,10 @@ Route::get('/eng', function () {
 
 Auth::routes();
 
+Route::get('/gestion_mesas', function () {
+    return view('admin_mesas');
+});
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware('auth')->name('home');
 Route::get('/reservas_comensales', [App\Http\Controllers\ReservaController::class, 'index'])->name('reservas_comensales');
 Route::get('/reservas_fechas', [App\Http\Controllers\ReservaController::class, 'reservas_fecha'])->name('reservas_fechas');

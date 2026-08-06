@@ -3,21 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Dashboard de Control y Distribución de Mesas</title>
-    <!-- Tailwind CSS para diseño moderno y estilizado -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome para iconos limpios y profesionales -->
+    <!-- Bootstrap 5 CSS -->
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome para iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Google Fonts para tipografía de sistema moderno -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: #0b0f19;
+            color: #f1f5f9;
         }
-        /* Patrón de cuadrícula tipo plano arquitectónico */
+
+        /* Colores personalizados compatibles con la paleta original */
+        .bg-dark-sidebar { background-color: #030712; }
+        .bg-dark-main { background-color: #0b0f19; }
+        .bg-dark-card { background-color: #111827; }
+        .bg-dark-card-soft { background-color: rgba(17, 24, 39, 0.6); }
+        .border-dark-custom { border-color: #1e293b !important; }
+        .text-amber { color: #f59e0b; }
+        .bg-amber { background-color: #f59e0b; color: #030712; }
+        .btn-amber {
+            background-color: #f59e0b;
+            color: #030712;
+            font-weight: 700;
+            border: none;
+        }
+        .btn-amber:hover {
+            background-color: #d97706;
+            color: #030712;
+        }
+
+        /* Patrón de cuadrícula del plano */
         .floorplan-grid {
             background-color: #111827;
             background-image: 
@@ -26,15 +50,16 @@
             background-size: 20px 20px;
             position: relative;
         }
-        /* Sombras suaves para las mesas y componentes */
+
         .table-shadow {
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
         }
-        /* Transición suave para cambios de estado */
+
         .transition-state {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        /* Estilos personalizados para scrollbar */
+
+        /* Scrollbar personalizado */
         ::-webkit-scrollbar {
             width: 6px;
             height: 6px;
@@ -49,63 +74,93 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #4b5563;
         }
+
+        /* Estados de Mesas */
+        .table-disponible {
+            background-color: rgba(6, 78, 59, 0.8);
+            color: #6ee7b7;
+            border-color: rgba(16, 185, 129, 0.5) !important;
+        }
+        .table-disponible:hover { background-color: #065f46; }
+
+        .table-ocupada {
+            background-color: rgba(136, 19, 55, 0.8);
+            color: #fda4af;
+            border-color: rgba(244, 63, 94, 0.5) !important;
+        }
+        .table-ocupada:hover { background-color: #9f1239; }
+
+        .table-reservada {
+            background-color: rgba(120, 53, 15, 0.8);
+            color: #fde047;
+            border-color: rgba(245, 158, 11, 0.5) !important;
+        }
+        .table-reservada:hover { background-color: #92400e; }
+
+        .table-mantenimiento {
+            background-color: #1f2937;
+            color: #9ca3af;
+            border-color: #4b5563 !important;
+        }
+        .table-mantenimiento:hover { background-color: #374151; }
+
+        .table-selected {
+            box-shadow: 0 0 0 4px #f59e0b !important;
+            border-color: #f59e0b !important;
+            transform: scale(1.05);
+        }
     </style>
 </head>
-<body class="text-slate-100 overflow-hidden h-screen flex">
+<body class="overflow-hidden vh-100 d-flex">
 
     <!-- BARRA LATERAL DE NAVEGACIÓN PRINCIPAL -->
-    <aside class="w-64 bg-slate-950 border-r border-slate-800 flex flex-col justify-between shrink-0">
+    <aside class="bg-dark-sidebar border-end border-dark-custom d-flex flex-column justify-content-between flex-shrink-0" style="width: 260px;">
         <div>
-            <!-- Header de Marca/Restaurante -->
-            <div class="p-6 border-b border-slate-900 flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-amber-600 flex items-center justify-center text-slate-950 font-bold text-xl shadow-lg shadow-amber-500/20">
+            <!-- Header de Marca -->
+            <div class="p-3 border-bottom border-dark-custom d-flex items-center align-items-center gap-3">
+                <div class="rounded-3 bg-amber d-flex align-items-center justify-content-center text-dark font-bold shadow-sm" style="width: 40px; height: 40px; font-size: 1.2rem;">
                     <i class="fa-solid fa-utensils"></i>
                 </div>
                 <div>
-                    <h1 class="font-bold text-lg leading-none text-white">Il Olivo</h1>
-                    <span class="text-xs text-amber-500 font-medium">Panel de Control</span>
+                    <h1 class="h6 font-bold m-0 text-white fw-bold">Il Olivo</h1>
+                    <span class="text-amber font-medium" style="font-size: 0.75rem;">Panel de Control</span>
                 </div>
             </div>
 
             <!-- Enlaces de navegación -->
-            <nav class="p-4 space-y-1.5">
-                <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-900 hover:text-white transition">
-                    <i class="fa-solid fa-chart-pie text-lg w-5"></i>
-                    <span class="font-medium text-sm">Resumen Diario</span>
-                </a>
-                <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-amber-500 bg-amber-500/10 font-medium transition">
-                    <i class="fa-solid fa-layer-group text-lg w-5"></i>
-                    <span class="font-medium text-sm">Distribución de Mesas</span>
-                </a>
-                <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-900 hover:text-white transition">
-                    <i class="fa-solid fa-calendar-check text-lg w-5"></i>
-                    <span class="font-medium text-sm">Reservas</span>
-                    <span class="ml-auto bg-amber-500 text-slate-950 text-xs font-bold px-2 py-0.5 rounded-full">12</span>
-                </a>
-                <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-900 hover:text-white transition">
-                    <i class="fa-solid fa-clock text-lg w-5"></i>
-                    <span class="font-medium text-sm">Horarios y Turnos</span>
-                </a>
-                <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-900 hover:text-white transition">
-                    <i class="fa-solid fa-users text-lg w-5"></i>
-                    <span class="font-medium text-sm">Clientes</span>
-                </a>
-                <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-900 hover:text-white transition">
-                    <i class="fa-solid fa-sliders text-lg w-5"></i>
-                    <span class="font-medium text-sm">Configuración</span>
-                </a>
+            <nav class="p-3">
+                <div class="d-flex flex-column gap-1">
+                   
+                    <a href="#" class="nav-link text-amber bg-dark-card p-2.5 rounded-3 d-flex align-items-center gap-3 border border-dark-custom fw-medium">
+                        <i class="fa-solid fa-layer-group text-lg" style="width: 20px;"></i>
+                        <span class="fw-medium small">Distribución de Mesas</span>
+                    </a>
+                    <a href="#" class="nav-link text-secondary p-2.5 rounded-3 d-flex align-items-center justify-content-between gap-3">
+                        <div class="d-flex align-items-center gap-3">
+                            <i class="fa-solid fa-calendar-check text-lg" style="width: 20px;"></i>
+                            <span class="fw-medium small">Reservas</span>
+                        </div>
+                        <span class="badge bg-amber rounded-pill text-dark">12</span>
+                    </a>
+                    <a href="#" class="nav-link text-secondary p-2.5 rounded-3 d-flex align-items-center gap-3">
+                        <i class="fa-solid fa-clock text-lg" style="width: 20px;"></i>
+                        <span class="fw-medium small">Horarios y Turnos</span>
+                    </a>
+                   
+                    
+                </div>
             </nav>
         </div>
 
-        <!-- Perfil de usuario en la parte inferior -->
-        <div class="p-4 border-t border-slate-900">
-            <div class="flex items-center gap-3 p-2 bg-slate-900/50 rounded-xl border border-slate-800">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100" alt="Avatar" class="w-10 h-10 rounded-lg object-cover">
-                <div>
-                    <h4 class="text-sm font-semibold text-white">Sofía Torres</h4>
-                    <p class="text-xs text-slate-400">Maitre / Admin</p>
+        <!-- Perfil de usuario -->
+        <div class="p-3 border-top border-dark-custom">
+            <div class="d-flex align-items-center gap-3 p-2 bg-dark-card rounded-3 border border-dark-custom">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100" alt="Avatar" class="rounded-2 object-fit-cover" style="width: 38px; height: 38px;">
+                <div class="overflow-hidden">
+                    <h4 class="small fw-semibold text-white m-0 text-truncate">Sofía Torres</h4>
+                    <p class="text-secondary m-0" style="font-size: 0.7rem;">Maitre / Admin</p>
                 </div>
-                <button class="ml-auto text-slate-400 hover:text-red-400 transition">
+                <button class="btn btn-link text-secondary ms-auto p-0 hover-danger">
                     <i class="fa-solid fa-right-from-bracket"></i>
                 </button>
             </div>
@@ -113,58 +168,46 @@
     </aside>
 
     <!-- CONTENEDOR PRINCIPAL -->
-    <main class="flex-grow flex flex-col min-w-0 bg-slate-950">
+    <main class="flex-grow-1 d-flex flex-column min-w-0 bg-dark-main">
         
         <!-- BARRA SUPERIOR (HEADER) -->
-        <header class="h-16 bg-slate-900/40 border-b border-slate-800 px-8 flex items-center justify-between shrink-0">
-            <div class="flex items-center gap-4">
-                <h2 class="text-xl font-bold text-white">Gestor de Distribución</h2>
-                <!-- Indicador del estado actual del restaurante -->
-                <span class="flex items-center gap-1.5 px-3 py-1 bg-emerald-500/10 text-emerald-400 rounded-full text-xs font-semibold border border-emerald-500/20">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <header class="border-bottom border-dark-custom px-4 d-flex align-items-center justify-content-between flex-shrink-0" style="height: 64px; background-color: rgba(17, 24, 39, 0.4);">
+            <div class="d-flex align-items-center gap-3">
+                <h2 class="h5 fw-bold text-white m-0">Gestor de Distribución de Mesas</h2>
+                <span class="badge bg-opacity-10 bg-success text-success border border-success border-opacity-25 rounded-pill px-2.5 py-1.5 align-items-center gap-1.5 d-inline-flex">
+                    <span class="spinner-grow spinner-grow-sm text-success" style="width: 6px; height: 6px;"></span>
                     Servicio Activo
                 </span>
             </div>
 
             <!-- Acciones de cabecera -->
-            <div class="flex items-center gap-4">
-                <!-- Selector de Turno de Servicio -->
-                <div class="flex items-center gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800">
-                    <button id="btn-lunch" onclick="setShift('almuerzo')" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-amber-500 text-slate-950 transition-all duration-200">
-                        <i class="fa-solid fa-sun mr-1"></i>Almuerzo
-                    </button>
-                    <button id="btn-dinner" onclick="setShift('cena')" class="px-3 py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition-all duration-200">
-                        <i class="fa-solid fa-moon mr-1"></i>Cena
-                    </button>
-                </div>
+            <div class="d-flex align-items-center gap-3">
+              
 
-                <!-- Fecha y Hora Actual simulada -->
-                <div class="text-right text-xs">
-                    <div class="font-semibold text-white" id="current-date">Sábado, 15 Noviembre</div>
-                    <div class="text-slate-400" id="current-time">Turno actual: 13:00 - 16:30</div>
+                <div class="text-end small">
+                    <div class="fw-semibold text-white" id="current-date">HOY : {{ \Carbon\Carbon::now()->format('d-m-Y') }}</div>
+                   {{-- <div class="text-secondary" id="current-time">HORA: {{ \Carbon\Carbon::now()->format('H:i') }}</div>--}}
+                    
                 </div>
             </div>
         </header>
 
-        <!-- SUBPANEL DE FILTROS Y CONTROLES DE VISTA -->
-        <section class="p-6 bg-slate-900/10 border-b border-slate-900 flex flex-wrap gap-4 items-center justify-between shrink-0">
+        <!-- SUBPANEL DE FILTROS Y CONTROLES -->
+        <section class="p-3 border-bottom border-dark-custom d-flex flex-wrap gap-3 align-items-center justify-content-between flex-shrink-0" style="background-color: rgba(17, 24, 39, 0.2);">
             <!-- Pestañas de Zonas -->
-            <div class="flex p-1 bg-slate-900 rounded-xl border border-slate-800">
-                <button onclick="setZone('salon')" id="zone-salon" class="px-4 py-2 text-sm font-semibold rounded-lg bg-slate-800 text-white shadow-sm transition">
-                    <i class="fa-solid fa-couch mr-2"></i>Salón Principal
+            <div class="btn-group p-1 bg-dark-sidebar rounded-3 border border-dark-custom">
+                <button onclick="setZone('salon')" id="zone-salon" class="btn btn-sm btn-dark active fw-semibold rounded-2 px-3">
+                    <i class="fa-solid fa-couch me-2"></i>Salón Principal
                 </button>
-                <button onclick="setZone('terraza')" id="zone-terraza" class="px-4 py-2 text-sm font-semibold rounded-lg text-slate-400 hover:text-white transition">
-                    <i class="fa-solid fa-umbrella-beach mr-2"></i>Terraza Exterior
-                </button>
-                <button onclick="setZone('barra')" id="zone-barra" class="px-4 py-2 text-sm font-semibold rounded-lg text-slate-400 hover:text-white transition">
-                    <i class="fa-solid fa-glass-cheers mr-2"></i>Barra de Bebidas
+                
+                <button onclick="setZone('mezaninne')" id="zone-mezaninne" class="btn btn-sm text-secondary fw-semibold rounded-2 px-3">
+                    <i class="fa-solid fa-vihara me-2" style="color: rgb(255, 255, 255);"></i>Mezaninne
                 </button>
             </div>
 
             <!-- Buscador y Vista Toggles -->
-            <div class="flex items-center gap-3">
-                <!-- Filtros Rápidos de Estado -->
-                <select id="filter-status" onchange="filterTables()" class="bg-slate-900 border border-slate-800 text-slate-300 text-sm rounded-xl px-3 py-2 outline-none focus:border-amber-500/50">
+            <div class="d-flex align-items-center gap-2">
+                <select id="filter-status" onchange="filterTables()" class="form-select form-select-sm bg-dark-sidebar border-dark-custom text-light rounded-3 shadow-none" style="width: auto;">
                     <option value="todos">Todos los estados</option>
                     <option value="disponible">Disponible</option>
                     <option value="ocupada">Ocupada</option>
@@ -172,312 +215,311 @@
                     <option value="mantenimiento">Mantenimiento</option>
                 </select>
 
-                <!-- Alternar entre Plano y Lista -->
-                <div class="flex bg-slate-900 p-1 rounded-xl border border-slate-800">
-                    <button onclick="switchView('map')" id="view-map-btn" class="p-2 rounded-lg bg-amber-500 text-slate-950 transition" title="Vista de Plano">
+                <div class="btn-group p-1 bg-dark-sidebar rounded-3 border border-dark-custom">
+                    <button onclick="switchView('map')" id="view-map-btn" class="btn btn-amber btn-sm rounded-2">
                         <i class="fa-solid fa-map"></i>
                     </button>
-                    <button onclick="switchView('list')" id="view-list-btn" class="p-2 rounded-lg text-slate-400 hover:text-white transition" title="Vista de Lista">
+                    <button onclick="switchView('list')" id="view-list-btn" class="btn btn-sm text-secondary rounded-2">
                         <i class="fa-solid fa-list-ul"></i>
                     </button>
                 </div>
 
-                <!-- Botón de Añadir Mesa -->
-                <button onclick="addNewTable()" class="bg-gradient-to-tr from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-bold px-4 py-2.5 rounded-xl text-sm shadow-lg shadow-amber-500/10 flex items-center gap-2 transition duration-200">
+                <button onclick="addNewTable()" class="btn btn-amber btn-sm rounded-3 px-3 py-2 d-flex align-items-center gap-2 shadow-sm">
                     <i class="fa-solid fa-plus"></i> Añadir Mesa
                 </button>
             </div>
         </section>
 
-        <!-- AREA DE CONTENIDO SPLIT: MAPA/LISTA + BARRA DE DETALLE LATERAL -->
-        <div class="flex-grow flex min-h-0 relative">
+        <!-- AREA DE CONTENIDO SPLIT: MAPA/LISTA + SIDEBAR -->
+        <div class="flex-grow-1 d-flex min-vh-0 position-relative overflow-hidden">
             
-            <!-- VISTA DEL PLANO DEL RESTAURANTE (Interactive Map Canvas) -->
-            <div id="view-map" class="flex-grow overflow-auto p-8 flex items-center justify-center floorplan-grid select-none relative transition-all duration-300">
-                <!-- Elementos Estructurales del Restaurante de fondo (Decorativos de plano) -->
-                <div class="absolute top-10 left-10 text-xs text-slate-700 uppercase tracking-widest font-bold border-l-2 border-slate-800 pl-3 py-1">Zona de Acceso / Recepción</div>
-                <div class="absolute bottom-10 right-10 text-xs text-slate-700 uppercase tracking-widest font-bold border-r-2 border-slate-800 pr-3 py-1 text-right">Acceso a Cocina y Baños</div>
-
-                <!-- El contenedor del plano físico -->
-                <div id="floor-container" class="w-[900px] h-[500px] bg-slate-900/60 rounded-3xl border border-slate-800 relative overflow-hidden transition-all duration-300 shadow-2xl">
+            <!-- VISTA MAPA INTERACTIVO -->
+            <div id="view-map" class="flex-grow-1 overflow-auto p-4 d-flex align-items-center justify-content-center floorplan-grid user-select-none position-relative">
+                
+                <div id="floor-container" class="bg-dark-card-soft rounded-4 border border-dark-custom position-relative overflow-hidden shadow-lg" style="width: 1150px; height: 550px;">
                     
-                    <!-- Barra decorativa para simular barra física -->
-                    <div id="visual-decor-bar" class="absolute top-0 right-1/4 w-12 h-24 bg-slate-800 border-b border-l border-slate-700 flex items-center justify-center text-[10px] text-slate-500 font-bold tracking-wider rounded-bl-xl uppercase transform -rotate-0 shadow-inner">
+                    <div id="visual-decor-bar-1" class="position-absolute top-0 bg-dark-sidebar border-bottom border-start border-dark-custom d-flex align-items-center justify-content-center rounded-bottom-start-3 text-secondary fw-bold" style="left: 0%; width: 140px; height: 100px; font-size: 9px; letter-spacing: 2px;">
+                        <span class="rotate-90">COCINA</span>
+                    </div>
+                    <div id="visual-decor-bar-2" class="position-absolute top-0 bg-dark-sidebar border-bottom border-start border-dark-custom d-flex align-items-center justify-content-center rounded-bottom-start-3 text-secondary fw-bold" style="left: 12.3%; width: 150px; height: 50px; font-size: 9px; letter-spacing: 2px;">
+                        <span class="rotate-90">BAÑO</span>
+                    </div>
+
+                     <div id="visual-decor-bar-3" class="position-absolute bg-dark-sidebar border-bottom border-start border-dark-custom d-flex align-items-center justify-content-center rounded-bottom-start-3 text-secondary fw-bold" style="left: 12.3%; top: 9.5%; width: 150px; height: 48px; font-size: 9px; letter-spacing: 2px;">
                         <span class="rotate-90">BARRA</span>
                     </div>
 
-                    <!-- Dibujo de Cocina física en el plano -->
-                    <div id="visual-decor-kitchen" class="absolute bottom-0 left-1/3 w-36 h-10 bg-slate-800/40 border-t border-x border-slate-700/60 flex items-center justify-center text-[10px] text-slate-600 font-bold tracking-wider rounded-t-xl uppercase">
-                        PASE COCINA
+                    <div id="visual-decor-kitchen-1" class="position-absolute bg-dark-sidebar border-top border-start border-end border-dark-custom d-flex align-items-center justify-content-center rounded-top-3 text-secondary fw-bold" style="left: 0%; bottom: 28%; width: 100px; height: 35px; font-size: 9px; letter-spacing: 1px;">
+                        CAJA
                     </div>
 
-                    <!-- Renderización Dinámica de las Mesas -->
-                    <div id="interactive-map" class="absolute inset-0"></div>
+                     <div id="visual-decor-kitchen-2" class="position-absolute bg-dark-sidebar border-top border-start border-end border-dark-custom d-flex align-items-center justify-content-center rounded-top-3 text-secondary fw-bold" style="left: 0%; bottom: 17%; width: 100%; height: 55px; font-size: 12px; letter-spacing: 1px;">
+                        AREA DE BALCONES
+                    </div>
+
+                     <div id="visual-divisor-1" class="position-absolute bg-dark-sidebar border-top border-start border-end border-dark-custom d-flex align-items-center justify-content-center rounded-top-3 text-secondary fw-bold" style="left: 0%; bottom: 0%; width: 100%; height: 40%; font-size: 12px; letter-spacing: 1px;">
+                        
+                    </div>
+
+                    <div id="visual-divisor-2" class="position-absolute bg-dark-sidebar border-top border-start border-end border-dark-custom d-flex align-items-center justify-content-center rounded-top-3 text-secondary fw-bold" style="left: 50%; top:0%; width: 50%; height: 20%; font-size: 12px; letter-spacing: 1px;">
+                       
+                    </div>
+
+
+                   
+
+                    <div id="interactive-map" class="position-absolute inset-0 w-100 h-100">
+                        
+                    </div>
                 </div>
             </div>
 
-            <!-- VISTA ALTERNATIVA EN TABLA/LISTA -->
-            <div id="view-list" class="flex-grow overflow-y-auto p-8 hidden transition-all duration-300">
-                <div class="max-w-4xl mx-auto bg-slate-900/50 rounded-2xl border border-slate-800 overflow-hidden shadow-xl">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="border-b border-slate-800 bg-slate-900/90 text-slate-400 text-xs uppercase tracking-wider">
-                                <th class="py-4 px-6 font-semibold">Mesa</th>
-                                <th class="py-4 px-6 font-semibold">Zona</th>
-                                <th class="py-4 px-6 font-semibold">Capacidad</th>
-                                <th class="py-4 px-6 font-semibold">Forma</th>
-                                <th class="py-4 px-6 font-semibold">Estado Actual</th>
-                                <th class="py-4 px-6 font-semibold text-right">Acciones</th>
+            <!-- VISTA EN TABLA/LISTA -->
+            <div id="view-list" class="flex-grow-1 overflow-y-auto p-4 d-none">
+                <div class="max-w-4xl mx-auto bg-dark-card rounded-4 border border-dark-custom overflow-hidden shadow">
+                    <table class="table table-dark table-hover align-middle mb-0">
+                        <thead class="bg-dark-sidebar border-bottom border-dark-custom text-secondary text-uppercase" style="font-size: 0.75rem;">
+                            <tr>
+                                <th class="py-3 px-4">Mesa</th>
+                                <th class="py-3 px-4">Zona</th>
+                                <th class="py-3 px-4">Capacidad</th>
+                                <th class="py-3 px-4">Forma</th>
+                                <th class="py-3 px-4">Estado Actual</th>
+                                <th class="py-3 px-4 text-end">Acciones</th>
                             </tr>
                         </thead>
-                        <tbody id="list-tables-body" class="divide-y divide-slate-800/40 text-sm">
-                            <!-- Inyectado dinámicamente -->
+                        <tbody id="list-tables-body" class="border-top-0 small">
+                            <!-- Dinámico -->
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- PANEL LATERAL DERECHO (Detalles de la Mesa Seleccionada) -->
-            <aside class="w-96 bg-slate-950 border-l border-slate-800 flex flex-col justify-between shrink-0 overflow-y-auto">
-                <div class="p-6 space-y-6">
-                    <!-- Cabecera del Panel Detalle -->
-                    <div class="flex items-center justify-between border-b border-slate-900 pb-4">
+            <!-- PANEL LATERAL DERECHO (Detalles) -->
+            <aside class="bg-dark-sidebar border-start border-dark-custom d-flex flex-column justify-content-between flex-shrink-0 overflow-y-auto" style="width: 360px;">
+                <div class="p-4">
+                    <div class="d-flex align-items-center justify-content-between border-bottom border-dark-custom pb-3 mb-4">
                         <div>
-                            <h3 class="font-bold text-white text-base">Ficha de Configuración</h3>
-                            <p class="text-xs text-slate-400">Edita parámetros en tiempo real</p>
+                            <h3 class="fw-bold text-white h6 m-0">Ficha de Configuración</h3>
+                           
                         </div>
-                        <span class="text-xs font-semibold px-2 py-1 bg-slate-900 border border-slate-800 rounded-lg text-slate-400">ID Único</span>
+                        <span class="badge bg-dark border border-dark-custom text-secondary">ID Único</span>
                     </div>
 
-                    <!-- Vista si no hay mesa seleccionada -->
-                    <div id="empty-state-sidebar" class="py-12 text-center space-y-4">
-                        <div class="w-16 h-16 rounded-full bg-slate-900 flex items-center justify-center text-slate-600 mx-auto border border-slate-800">
-                            <i class="fa-solid fa-hand-pointer text-xl"></i>
+                    <div id="empty-state-sidebar" class="py-5 text-center">
+                        <div class="rounded-circle bg-dark-card d-flex align-items-center justify-content-center text-secondary mx-auto mb-3 border border-dark-custom" style="width: 60px; height: 60px;">
+                            <i class="fa-solid fa-hand-pointer fs-4"></i>
                         </div>
-                        <p class="text-sm text-slate-400 max-w-[200px] mx-auto">Selecciona una mesa en el plano para editar sus propiedades.</p>
+                        <p class="small text-secondary px-4 m-0">Selecciona una mesa en el plano para editar sus propiedades.</p>
                     </div>
 
-                    <!-- Formulario de Edición (Oculto inicialmente hasta que seleccionen una mesa) -->
-                    <div id="editor-form-sidebar" class="space-y-6 hidden">
-                        <!-- Identificador Principal de la Mesa -->
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Etiqueta/No.</label>
-                                <input type="text" id="edit-table-number" oninput="saveLiveChanges()" class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-4 py-2.5 text-sm focus:border-amber-500/50 outline-none font-bold">
+                    <div id="editor-form-sidebar" class="d-none">
+                       {{-- <div class="row g-3 mb-4">
+                            <div class="col-6">
+                                <label class="form-label text-secondary fw-bold text-uppercase" style="font-size: 0.65rem;">Etiqueta/No.</label>
+                                <input type="text" id="edit-table-number" oninput="saveLiveChanges()" class="form-control bg-dark-card border-dark-custom text-white fw-bold shadow-none">
                             </div>
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Comensales Máx.</label>
-                                <div class="flex items-center bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
-                                    <button onclick="adjustCapacity(-1)" class="px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800 transition"><i class="fa-solid fa-minus text-xs"></i></button>
-                                    <input type="number" id="edit-table-capacity" min="1" max="12" readonly class="w-full bg-transparent border-none text-center text-white text-sm font-bold outline-none">
-                                    <button onclick="adjustCapacity(1)" class="px-3 py-2.5 text-slate-400 hover:text-white hover:bg-slate-800 transition"><i class="fa-solid fa-plus text-xs"></i></button>
+                            <div class="col-6">
+                                <label class="form-label text-secondary fw-bold text-uppercase" style="font-size: 0.65rem;">Comensales Máx.</label>
+                                <div class="input-group bg-dark-card border border-dark-custom rounded-3 overflow-hidden">
+                                    <button onclick="adjustCapacity(-1)" class="btn btn-sm btn-dark text-secondary border-0"><i class="fa-solid fa-minus text-xs"></i></button>
+                                    <input type="number" id="edit-table-capacity" min="1" max="12" readonly class="form-control form-control-sm bg-transparent border-0 text-center text-white fw-bold shadow-none">
+                                    <button onclick="adjustCapacity(1)" class="btn btn-sm btn-dark text-secondary border-0"><i class="fa-solid fa-plus text-xs"></i></button>
                                 </div>
                             </div>
-                        </div>
+                        </div>--}}
 
-                        <!-- Estado Actual de la Mesa -->
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Estado de la Mesa</label>
-                            <div class="grid grid-cols-2 gap-2" id="status-button-group">
-                                <button onclick="setTableStatus('disponible')" id="status-btn-disponible" class="flex items-center gap-2 p-2.5 rounded-xl border text-left text-xs font-semibold transition">
-                                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-                                    Disponible
-                                </button>
-                                <button onclick="setTableStatus('ocupada')" id="status-btn-ocupada" class="flex items-center gap-2 p-2.5 rounded-xl border text-left text-xs font-semibold transition">
-                                    <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
-                                    Ocupada
-                                </button>
-                                <button onclick="setTableStatus('reservada')" id="status-btn-reservada" class="flex items-center gap-2 p-2.5 rounded-xl border text-left text-xs font-semibold transition">
-                                    <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
-                                    Reservada
-                                </button>
-                                <button onclick="setTableStatus('mantenimiento')" id="status-btn-mantenimiento" class="flex items-center gap-2 p-2.5 rounded-xl border text-left text-xs font-semibold transition">
-                                    <span class="w-2.5 h-2.5 rounded-full bg-slate-500"></span>
-                                    Bloqueada
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Propiedades Físicas -->
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Forma</label>
-                                <div class="flex p-1 bg-slate-900 rounded-xl border border-slate-800">
-                                    <button onclick="setTableShape('square')" id="shape-btn-square" class="flex-grow py-1.5 text-xs font-semibold rounded-lg text-center transition">
-                                        Cuadrada
+                        <div class="mb-4">
+                            <label class="form-label text-secondary fw-bold text-uppercase" style="font-size: 0.65rem;">Estado de la Mesa</label>
+                            <div class="row g-2" id="status-button-group">
+                                <div class="col-6">
+                                    <button onclick="setTableStatus('disponible')" id="status-btn-disponible" class="btn btn-outline-secondary w-100 btn-sm text-start p-2 d-flex align-items-center gap-2">
+                                        <span class="rounded-circle bg-success d-inline-block" style="width: 8px; height: 8px;"></span>
+                                        Disponible
                                     </button>
-                                    <button onclick="setTableShape('round')" id="shape-btn-round" class="flex-grow py-1.5 text-xs font-semibold rounded-lg text-center transition">
-                                        Redonda
+                                </div>
+                                <div class="col-6">
+                                    <button onclick="setTableStatus('ocupada')" id="status-btn-ocupada" class="btn btn-outline-secondary w-100 btn-sm text-start p-2 d-flex align-items-center gap-2">
+                                        <span class="rounded-circle bg-danger d-inline-block" style="width: 8px; height: 8px;"></span>
+                                        Ocupada
+                                    </button>
+                                </div>
+                                <div class="col-6">
+                                    <button onclick="setTableStatus('reservada')" id="status-btn-reservada" class="btn btn-outline-secondary w-100 btn-sm text-start p-2 d-flex align-items-center gap-2">
+                                        <span class="rounded-circle bg-warning d-inline-block" style="width: 8px; height: 8px;"></span>
+                                        Reservada
+                                    </button>
+                                </div>
+                                <div class="col-6">
+                                    <button onclick="setTableStatus('mantenimiento')" id="status-btn-mantenimiento" class="btn btn-outline-secondary w-100 btn-sm text-start p-2 d-flex align-items-center gap-2">
+                                        <span class="rounded-circle bg-secondary d-inline-block" style="width: 8px; height: 8px;"></span>
+                                        Bloqueada
                                     </button>
                                 </div>
                             </div>
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Sala / Zona</label>
-                                <select id="edit-table-zone" onchange="saveLiveChanges()" class="w-full bg-slate-900 border border-slate-800 text-white rounded-xl px-3 py-2 text-xs focus:border-amber-500/50 outline-none h-[34px]">
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-6">
+                               {{-- <label class="form-label text-secondary fw-bold text-uppercase" style="font-size: 0.65rem;">Forma</label>
+                                <div class="btn-group w-100 p-1 bg-dark-card rounded-3 border border-dark-custom">
+                                    <button onclick="setTableShape('square')" id="shape-btn-square" class="btn btn-sm btn-dark fw-semibold text-xs">Cuadrada</button>
+                                    <button onclick="setTableShape('round')" id="shape-btn-round" class="btn btn-sm text-secondary fw-semibold text-xs">Redonda</button>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label text-secondary fw-bold text-uppercase" style="font-size: 0.65rem;">Sala / Zona</label>
+                                <select id="edit-table-zone" onchange="saveLiveChanges()" class="form-select form-select-sm bg-dark-card border-dark-custom text-white shadow-none">
                                     <option value="salon">Salón Principal</option>
                                     <option value="terraza">Terraza Exterior</option>
-                                    <option value="barra">Barra de Bebidas</option>
-                                </select>
+                                    
+                                </select>--}}
                             </div>
                         </div>
 
-                        <!-- Planificación / Próximas Reservas de esta mesa -->
-                        <div class="border-t border-slate-900 pt-5 space-y-3">
-                            <h4 class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
-                                <i class="fa-solid fa-calendar text-amber-500"></i> Reservas del Turno
+                        <div class="border-top border-dark-custom pt-4">
+                            <h4 class="text-secondary fw-bold text-uppercase mb-3 d-flex align-items-center gap-2" style="font-size: 0.7rem;">
+                                <i class="fa-solid fa-calendar text-amber"></i> Reservas del Turno
                             </h4>
-                            
-                            <div class="space-y-2" id="sidebar-reservation-list">
-                                <!-- Datos de reserva simulados de acuerdo al estado -->
-                            </div>
+                            <div class="d-flex flex-column gap-2" id="sidebar-reservation-list"></div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Botones de Acción en el pie de página del panel de control -->
-                <div class="p-6 border-t border-slate-900 bg-slate-950/80 sticky bottom-0">
-                    <div class="flex gap-3">
-                        <button onclick="deleteSelectedTable()" id="btn-delete-table" class="flex-grow bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white font-bold py-3 px-4 rounded-xl text-sm border border-red-500/20 transition-all duration-150 hidden">
-                            <i class="fa-solid fa-trash-can mr-2"></i>Eliminar Mesa
-                        </button>
-                    </div>
-                </div>
+               {{-- <div class="p-4 border-top border-dark-custom bg-dark-sidebar sticky-bottom">
+                    <button onclick="deleteSelectedTable()" id="btn-delete-table" class="btn btn-outline-danger w-100 fw-bold py-2 d-none">
+                        <i class="fa-solid fa-trash-can me-2"></i>Eliminar Mesa
+                    </button>
+                </div>--}}
             </aside>
-        </div>
+        </div> 
 
-        <!-- BARRA DE ESTADÍSTICAS DEL DÍA -->
-        <footer class="h-16 bg-slate-900/90 border-t border-slate-800 px-8 flex items-center justify-between shrink-0 text-xs">
-            <!-- Leyenda de colores -->
-            <div class="flex items-center gap-6">
-                <div class="flex items-center gap-2">
-                    <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
-                    <span class="text-slate-400 font-medium">Disponible (<span id="lbl-count-disponibles">0</span>)</span>
+        <!-- FOOTER KPIS -->
+        <footer class="border-top border-dark-custom px-4 d-flex align-items-center justify-content-between flex-shrink-0 bg-dark-sidebar" style="height: 56px; font-size: 0.75rem;">
+            <div class="d-flex align-items-center gap-4">
+                <div class="d-flex align-items-center gap-2">
+                    <span class="rounded-circle bg-success d-inline-block" style="width: 8px; height: 8px;"></span>
+                    <span class="text-secondary">Disponible (<span id="lbl-count-disponibles">0</span>)</span>
                 </div>
-                <div class="flex items-center gap-2">
-                    <span class="w-3 h-3 rounded-full bg-rose-500"></span>
-                    <span class="text-slate-400 font-medium">Ocupada (<span id="lbl-count-ocupadas">0</span>)</span>
+                <div class="d-flex align-items-center gap-2">
+                    <span class="rounded-circle bg-danger d-inline-block" style="width: 8px; height: 8px;"></span>
+                    <span class="text-secondary">Ocupada (<span id="lbl-count-ocupadas">0</span>)</span>
                 </div>
-                <div class="flex items-center gap-2">
-                    <span class="w-3 h-3 rounded-full bg-amber-500"></span>
-                    <span class="text-slate-400 font-medium">Reservada (<span id="lbl-count-reservadas">0</span>)</span>
+                <div class="d-flex align-items-center gap-2">
+                    <span class="rounded-circle bg-warning d-inline-block" style="width: 8px; height: 8px;"></span>
+                    <span class="text-secondary">Reservada (<span id="lbl-count-reservadas">0</span>)</span>
                 </div>
-                <div class="flex items-center gap-2">
-                    <span class="w-3 h-3 rounded-full bg-slate-500"></span>
-                    <span class="text-slate-400 font-medium">Bloqueada (<span id="lbl-count-mantenimiento">0</span>)</span>
+                <div class="d-flex align-items-center gap-2">
+                    <span class="rounded-circle bg-secondary d-inline-block" style="width: 8px; height: 8px;"></span>
+                    <span class="text-secondary">Bloqueada (<span id="lbl-count-mantenimiento">0</span>)</span>
                 </div>
             </div>
 
-            <!-- KPIs Rápidos -->
-            <div class="flex gap-8 items-center">
+            <div class="d-flex gap-4 align-items-center">
                 <div>
-                    <span class="text-slate-500 uppercase tracking-wider">Capacidad Total Asientos:</span>
-                    <span class="text-white font-bold ml-1.5 text-sm" id="lbl-total-seats">0 pax</span>
+                    <span class="text-secondary text-uppercase">Capacidad Total:</span>
+                    <span class="text-white fw-bold ms-1" id="lbl-total-seats">0 pax</span>
                 </div>
                 <div>
-                    <span class="text-slate-500 uppercase tracking-wider">Porcentaje de Ocupación:</span>
-                    <span class="text-amber-500 font-extrabold ml-1.5 text-sm" id="lbl-occupancy-rate">0%</span>
+                    <span class="text-secondary text-uppercase">Ocupación:</span>
+                    <span class="text-amber fw-bold ms-1" id="lbl-occupancy-rate">0%</span>
                 </div>
             </div>
         </footer>
     </main>
 
-    <!-- LOGICA DE COMPORTAMIENTO INTERACTIVO (JAVASCRIPT) -->
-    <script>
-        // BASE DE DATOS INICIAL DE MESAS (Estado local en memoria para el prototipo)
-        let tables = [
-            // Salón Principal
-            { id: 1, number: "M1", capacity: 4, shape: "square", status: "disponible", zone: "salon", x: 80, y: 80 },
-            { id: 2, number: "M2", capacity: 2, shape: "round", status: "ocupada", zone: "salon", x: 250, y: 80 },
-            { id: 3, number: "M3", capacity: 6, shape: "square", status: "reservada", zone: "salon", x: 420, y: 80 },
-            { id: 4, number: "M4", capacity: 4, shape: "square", status: "disponible", zone: "salon", x: 80, y: 220 },
-            { id: 5, number: "M5", capacity: 8, shape: "square", status: "mantenimiento", zone: "salon", x: 250, y: 220 },
-            { id: 6, number: "M6", capacity: 4, shape: "round", status: "disponible", zone: "salon", x: 420, y: 220 },
-            { id: 7, number: "M7", capacity: 2, shape: "round", status: "disponible", zone: "salon", x: 620, y: 80 },
-            { id: 8, number: "M8", capacity: 4, shape: "square", status: "reservada", zone: "salon", x: 620, y: 220 },
-            
-            // Terraza Exterior
-            { id: 9, number: "T1", capacity: 4, shape: "square", status: "disponible", zone: "terraza", x: 120, y: 150 },
-            { id: 10, number: "T2", capacity: 2, shape: "round", status: "reservada", zone: "terraza", x: 300, y: 150 },
-            { id: 11, number: "T3", capacity: 6, shape: "square", status: "disponible", zone: "terraza", x: 480, y: 150 },
-            { id: 12, number: "T4", capacity: 4, shape: "round", status: "ocupada", zone: "terraza", x: 660, y: 150 },
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-            // Barra de Bebidas
-            { id: 13, number: "B1", capacity: 1, shape: "round", status: "ocupada", zone: "barra", x: 150, y: 180 },
-            { id: 14, number: "B2", capacity: 1, shape: "round", status: "disponible", zone: "barra", x: 280, y: 180 },
-            { id: 15, number: "B3", capacity: 1, shape: "round", status: "disponible", zone: "barra", x: 410, y: 180 },
-            { id: 16, number: "B4", capacity: 1, shape: "round", status: "ocupada", zone: "barra", x: 540, y: 180 }
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        //MESAS SALON PRINCIPAL 
+        let tables = [
+            { id: 1, number: "M1", capacity: 7, shape: "square", status: "disponible", zone: "salon", x: 390, y: 30 },
+            { id: 2, number: "M2", capacity: 2, shape: "square", status: "ocupada", zone: "salon", x: 570, y: 50 },
+            { id: 3, number: "M3", capacity: 2, shape: "square", status: "reservada", zone: "salon", x: 710, y: 50 },
+            { id: 4, number: "M4", capacity: 2, shape: "square", status: "disponible", zone: "salon", x: 850, y: 50 },
+            { id: 5, number: "M5", capacity: 4, shape: "square", status: "mantenimiento", zone: "salon", x: 990, y: 30 },
+            { id: 6, number: "M6", capacity: 6, shape: "square", status: "disponible", zone: "salon", x: 1010, y: 210 },
+            { id: 7, number: "M7", capacity: 7, shape: "square", status: "disponible", zone: "salon", x: 840, y: 280 },
+            { id: 8, number: "M8", capacity: 7, shape: "square", status: "reservada", zone: "salon", x: 660, y: 280 },
+            { id: 9, number: "M9", capacity: 2, shape: "square", status: "reservada", zone: "salon", x: 510, y: 310 },
+            { id: 10, number: "M10", capacity: 4, shape: "square", status: "reservada", zone: "salon", x: 350, y: 290 },
+            { id: 11, number: "M11", capacity: 4, shape: "square", status: "reservada", zone: "salon", x: 190, y: 290 },        
+            { id: 12, number: "M12", capacity: 2, shape: "square", status: "ocupada", zone: "salon", x: 50, y: 470 },
+            { id: 13, number: "M13", capacity: 2, shape: "square", status: "disponible", zone: "salon", x: 980, y: 470 }, 
+            
+         
+            { id: 14, number: "M14", capacity: 6, shape: "square", status: "disponible", zone: "mezaninne", x: 60, y: 20 },
+            { id: 15, number: "M15", capacity: 4, shape: "square", status: "disponible", zone: "mezaninne", x: 50, y: 210 },
+            { id: 16, number: "M16", capacity: 4, shape: "square", status: "disponible", zone: "mezaninne", x: 290, y: 30 },
+            { id: 17, number: "M17", capacity: 4, shape: "square", status: "disponible", zone: "mezaninne", x: 290, y: 210 },
+            { id: 18, number: "M18", capacity: 2, shape: "square", status: "disponible", zone: "mezaninne", x: 650, y: 120 },
+            { id: 19, number: "M19", capacity: 2, shape: "square", status: "disponible", zone: "mezaninne", x: 540, y: 240 },
+            { id: 20, number: "M20", capacity: 2, shape: "square", status: "disponible", zone: "mezaninne", x: 740, y: 240 },
         ];
 
-        // Reservas Simuladas vinculadas a mesas para mostrar fidelidad del backend
         const dummyReservations = {
             disponible: [],
             mantenimiento: [],
-            ocupada: [
-                { id: "R-902", guest: "Familia García", time: "14:00", pax: 4, status: "Sentado" }
-            ],
+            ocupada: [{ id: "R-902", guest: "Familia García", time: "14:00", pax: 4, status: "Sentado" }],
             reservada: [
                 { id: "R-501", guest: "Carlos Martínez", time: "14:30", pax: 4, status: "Pendiente" },
                 { id: "R-102", guest: "Laura Benítez", time: "21:00", pax: 2, status: "Tardío" }
             ]
         };
 
-        // Estado de la aplicación
         let selectedTableId = null;
         let activeZone = "salon";
-        let activeView = "map"; // map | list
+        let activeView = "map";
         let activeShift = "almuerzo";
         let draggingElement = null;
         let dragOffset = { x: 0, y: 0 };
 
-        // Al iniciar
         window.addEventListener('DOMContentLoaded', () => {
             renderActiveView();
             updateDailyKPIs();
         });
 
-        // Cambiar entre Sala/Terraza/Barra
         function setZone(zoneName) {
-            activeZone = zoneName;
-            
-            // Actualizar interfaz visual de botones de pestañas
-            ['salon', 'terraza', 'barra'].forEach(z => {
+            activeZone = zoneName; 
+             
+                 ['salon','mezaninne'].forEach(z => {
+               
                 const btn = document.getElementById(`zone-${z}`);
                 if (z === zoneName) {
-                    btn.className = "px-4 py-2 text-sm font-semibold rounded-lg bg-slate-800 text-white shadow-sm transition";
+                    btn.className = "btn btn-sm btn-dark active fw-semibold rounded-2 px-3";
                 } else {
-                    btn.className = "px-4 py-2 text-sm font-semibold rounded-lg text-slate-400 hover:text-white transition";
-                }
-            });
+                    btn.className = "btn btn-sm text-secondary fw-semibold rounded-2 px-3";
+                }          
 
-            // Si cambiamos de sala, deseleccionar mesa actual para evitar cruce de datos
-            deselectTable();
-            renderActiveView();
-        }
+            });       
+                deselectTable();
+                renderActiveView();           
+            } 
+       
 
-        // Cambiar de vista (Mapa <--> Lista)
         function switchView(viewName) {
             activeView = viewName;
-
             const mapBtn = document.getElementById('view-map-btn');
             const listBtn = document.getElementById('view-list-btn');
             const mapView = document.getElementById('view-map');
             const listView = document.getElementById('view-list');
 
             if (viewName === 'map') {
-                mapBtn.className = "p-2 rounded-lg bg-amber-500 text-slate-950 transition";
-                listBtn.className = "p-2 rounded-lg text-slate-400 hover:text-white transition";
-                mapView.classList.remove('hidden');
-                listView.classList.add('hidden');
+                mapBtn.className = "btn btn-amber btn-sm rounded-2";
+                listBtn.className = "btn btn-sm text-secondary rounded-2";
+                mapView.classList.remove('d-none');
+                listView.classList.add('d-none');
             } else {
-                listBtn.className = "p-2 rounded-lg bg-amber-500 text-slate-950 transition";
-                mapBtn.className = "p-2 rounded-lg text-slate-400 hover:text-white transition";
-                listView.classList.remove('hidden');
-                mapView.classList.add('hidden');
+                listBtn.className = "btn btn-amber btn-sm rounded-2";
+                mapBtn.className = "btn btn-sm text-secondary rounded-2";
+                listView.classList.remove('d-none');
+                mapView.classList.add('d-none');
             }
             renderActiveView();
         }
 
-        // Cambiar de Turno (Almuerzo / Cena)
         function setShift(shiftName) {
             activeShift = shiftName;
             const lunchBtn = document.getElementById('btn-lunch');
@@ -485,17 +527,16 @@
             const timeLabel = document.getElementById('current-time');
 
             if (shiftName === 'almuerzo') {
-                lunchBtn.className = "px-3 py-1.5 text-xs font-semibold rounded-lg bg-amber-500 text-slate-950 transition-all duration-200";
-                dinnerBtn.className = "px-3 py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition-all duration-200";
+                lunchBtn.className = "btn btn-amber btn-sm rounded-2 px-3 py-1 text-xs fw-semibold";
+                dinnerBtn.className = "btn btn-sm text-secondary rounded-2 px-3 py-1 text-xs fw-semibold";
                 timeLabel.innerText = "Turno actual: 13:00 - 16:30";
             } else {
-                dinnerBtn.className = "px-3 py-1.5 text-xs font-semibold rounded-lg bg-amber-500 text-slate-950 transition-all duration-200";
-                lunchBtn.className = "px-3 py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white transition-all duration-200";
+                dinnerBtn.className = "btn btn-amber btn-sm rounded-2 px-3 py-1 text-xs fw-semibold";
+                lunchBtn.className = "btn btn-sm text-secondary rounded-2 px-3 py-1 text-xs fw-semibold";
                 timeLabel.innerText = "Turno actual: 20:00 - 23:45";
             }
         }
 
-        // Renderizado inteligente
         function renderActiveView() {
             if (activeView === 'map') {
                 renderFloorplan();
@@ -504,108 +545,101 @@
             }
         }
 
-        // RENDERIZADOR DEL PLANO FÍSICO (Floorplan Map)
         function renderFloorplan() {
             const container = document.getElementById('interactive-map');
-            container.innerHTML = ''; // Limpiar contenedor de mapa
+            container.innerHTML = '';
 
-            // Filtrar mesas que corresponden a la zona actual
             const zoneTables = tables.filter(t => t.zone === activeZone);
-
+              if (activeZone === 'mezaninne') {
+                document.getElementById('visual-decor-bar-1').classList.add('d-none');
+                document.getElementById('visual-decor-bar-2').classList.add('d-none');
+                document.getElementById('visual-decor-bar-3').classList.add('d-none');
+                document.getElementById('visual-decor-kitchen-1').classList.add('d-none');
+                document.getElementById('visual-decor-kitchen-2').classList.add('d-none');
+                document.getElementById('visual-divisor-1').classList.remove('d-none');
+                document.getElementById('visual-divisor-2').classList.remove('d-none');
+            } else if (activeZone === 'salon') {
+                    document.getElementById('visual-decor-bar-1').classList.remove('d-none');
+                     document.getElementById('visual-decor-bar-2').classList.remove('d-none');
+                     document.getElementById('visual-decor-bar-3').classList.remove('d-none');
+                     document.getElementById('visual-decor-kitchen-1').classList.remove('d-none');
+                     document.getElementById('visual-decor-kitchen-2').classList.remove('d-none');
+                     document.getElementById('visual-divisor-1').classList.add('d-none');
+                     document.getElementById('visual-divisor-2').classList.add('d-none');
+            }
             zoneTables.forEach(table => {
-                // Crear estructura visual de la mesa
                 const tableEl = document.createElement('div');
                 tableEl.id = `map-table-${table.id}`;
-                tableEl.className = `absolute table-shadow cursor-grab transition-state flex flex-col items-center justify-center p-2 border-2 select-none `;
-                
-                // Aplicar estilo de forma (Cuadrada o Redonda)
+                tableEl.style.position = 'absolute';
+                tableEl.style.cursor = 'grab';
+                tableEl.className = `table-shadow transition-state d-flex flex-column align-items-center justify-content-center p-2 border border-2 user-select-none `;
+
                 if (table.shape === 'round') {
-                    tableEl.classList.add('rounded-full');
+                    tableEl.classList.add('rounded-circle');
                 } else {
-                    tableEl.classList.add('rounded-xl');
+                    tableEl.classList.add('rounded-4');
                 }
 
-                // Ajustar dimensión visual en función de la capacidad de pax
-                let sizeClass = 'w-20 h-20 text-xs';
+                let sizeStyle = { width: '100px', height: '80px', fontSize: '0.75rem' };
                 if (table.capacity <= 2) {
-                    sizeClass = 'w-16 h-16 text-xs';
-                } else if (table.capacity >= 6) {
-                    sizeClass = 'w-28 h-28 text-sm';
-                } else if (table.capacity >= 8) {
-                    sizeClass = 'w-36 h-36 text-base';
+                    sizeStyle = { width: '120px', height: '65px', fontSize: '0.7rem' };
+                } else if (table.capacity === 4) {
+                    sizeStyle = { width: '130px', height: '100px', fontSize: '0.85rem' };
+                } else if (table.capacity === 6) {
+                    sizeStyle = { width: '110px', height: '150px', fontSize: '0.85rem' };
+                } else if (table.capacity === 7) {
+                    sizeStyle = { width: '150px', height: '110px', fontSize: '1rem' };
                 }
-                tableEl.className += ` ${sizeClass} `;
+                
+                Object.assign(tableEl.style, sizeStyle);
+                tableEl.classList.add(`table-${table.status}`);
 
-                // Definir colores y estados
-                let colorClass = "";
-                let statusBadge = "";
-                if (table.status === 'disponible') {
-                    colorClass = "bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 border-emerald-500/50 shadow-emerald-500/10";
-                } else if (table.status === 'ocupada') {
-                    colorClass = "bg-rose-950/80 hover:bg-rose-900 text-rose-300 border-rose-500/50 shadow-rose-500/10";
-                } else if (table.status === 'reservada') {
-                    colorClass = "bg-amber-950/80 hover:bg-amber-900 text-amber-300 border-amber-500/50 shadow-amber-500/10";
-                } else {
-                    colorClass = "bg-slate-800 hover:bg-slate-700 text-slate-400 border-slate-600 shadow-slate-600/10";
-                }
-
-                // Si está seleccionada, añadir borde dorado de alta intensidad
                 if (table.id === selectedTableId) {
-                    colorClass += " ring-4 ring-amber-400 border-amber-400 scale-105";
+                    tableEl.classList.add('table-selected');
                 }
 
-                tableEl.className += ` ${colorClass}`;
                 tableEl.style.left = `${table.x}px`;
                 tableEl.style.top = `${table.y}px`;
 
-                // Añadir sillas alrededor de la mesa para mayor valor visual
                 let chairsHTML = '';
                 for(let i=1; i<=table.capacity; i++) {
-                    chairsHTML += `<span class="inline-block w-1.5 h-1.5 rounded-full bg-current opacity-60 mx-0.5"></span>`;
+                    chairsHTML += `<span class="d-inline-block rounded-circle bg-current opacity-75 mx-0.5" style="width: 5px; height: 5px;"></span>`;
                 }
 
                 tableEl.innerHTML = `
-                    <div class="font-extrabold tracking-wider leading-none mb-1 text-white">${table.number}</div>
-                    <div class="text-[10px] font-semibold opacity-80 leading-none mb-1.5">${table.capacity} Pax</div>
-                    <div class="flex items-center justify-center">${chairsHTML}</div>
+                    <div class="fw-bold text-white mb-1 leading-none">${table.number}</div>
+                    <div class="fw-semibold opacity-75 mb-1" style="font-size: 9px;">${table.capacity} Pax</div>
+                    <div class="d-flex align-items-center justify-content-center">${chairsHTML}</div>
                 `;
 
-                // Eventos de selección
                 tableEl.addEventListener('click', (e) => {
                     e.stopPropagation();
                     selectTable(table.id);
                 });
 
-                // Implementación de arrastrar y soltar física (Drag and Drop)
                 tableEl.addEventListener('mousedown', (e) => {
-                    if (e.button !== 0) return; // Solo arrastrar con clic izquierdo
+                    if (e.button !== 0) return;
                     draggingElement = table;
                     const rect = tableEl.getBoundingClientRect();
-                    const containerRect = document.getElementById('floor-container').getBoundingClientRect();
-                    
                     dragOffset.x = e.clientX - rect.left;
                     dragOffset.y = e.clientY - rect.top;
-                    
                     tableEl.classList.remove('transition-state');
-                    tableEl.classList.replace('cursor-grab', 'cursor-grabbing');
+                    tableEl.style.cursor = 'grabbing';
                 });
 
                 container.appendChild(tableEl);
             });
         }
 
-        // Manejador global del arrastre (Drag & Drop de mesas en el plano)
         document.addEventListener('mousemove', (e) => {
             if (!draggingElement) return;
 
             const floorContainer = document.getElementById('floor-container');
             const containerRect = floorContainer.getBoundingClientRect();
             
-            // Calcular posiciones locales dentro del plano relativizado
             let newX = e.clientX - containerRect.left - dragOffset.x;
             let newY = e.clientY - containerRect.top - dragOffset.y;
 
-            // Limitar dentro del contenedor del restaurante (bordes)
             const tableEl = document.getElementById(`map-table-${draggingElement.id}`);
             const tableWidth = tableEl.offsetWidth;
             const tableHeight = tableEl.offsetHeight;
@@ -613,15 +647,12 @@
             newX = Math.max(0, Math.min(newX, containerRect.width - tableWidth));
             newY = Math.max(0, Math.min(newY, containerRect.height - tableHeight));
 
-            // Snap a rejilla (20px de precisión opcional para alineación limpia)
             newX = Math.round(newX / 10) * 10;
             newY = Math.round(newY / 10) * 10;
 
-            // Actualizar modelo de base de datos local
             draggingElement.x = newX;
             draggingElement.y = newY;
 
-            // Reflejar en la UI en caliente
             tableEl.style.left = `${newX}px`;
             tableEl.style.top = `${newY}px`;
         });
@@ -631,26 +662,23 @@
                 const tableEl = document.getElementById(`map-table-${draggingElement.id}`);
                 if (tableEl) {
                     tableEl.classList.add('transition-state');
-                    tableEl.classList.replace('cursor-grabbing', 'cursor-grab');
+                    tableEl.style.cursor = 'grab';
                 }
                 draggingElement = null;
             }
         });
 
-        // FILTRADO DE LA LISTA / TABLA DE CONTROL
         function filterTables() {
             renderActiveView();
         }
 
-        // GENERACIÓN DE LA VISTA EN LISTA
         function renderTableList() {
             const tbody = document.getElementById('list-tables-body');
             tbody.innerHTML = '';
 
             const statusFilter = document.getElementById('filter-status').value;
-
-            // Filtrar mesas según la zona activa y el buscador de estados
             let filtered = tables.filter(t => t.zone === activeZone);
+            
             if (statusFilter !== 'todos') {
                 filtered = filtered.filter(t => t.status === statusFilter);
             }
@@ -658,8 +686,8 @@
             if (filtered.length === 0) {
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="6" class="py-12 text-center text-slate-500 font-medium">
-                            <i class="fa-solid fa-triangle-exclamation text-2xl mb-3 block"></i>
+                        <td colspan="6" class="py-5 text-center text-secondary">
+                            <i class="fa-solid fa-triangle-exclamation fs-3 mb-2 d-block"></i>
                             No se encontraron mesas que coincidan con los filtros.
                         </td>
                     </tr>
@@ -670,29 +698,28 @@
             filtered.forEach(table => {
                 let statusBadge = "";
                 if (table.status === 'disponible') {
-                    statusBadge = `<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>Disponible</span>`;
+                    statusBadge = `<span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 rounded-pill"><span class="d-inline-block rounded-circle bg-success me-1" style="width:6px;height:6px;"></span>Disponible</span>`;
                 } else if (table.status === 'ocupada') {
-                    statusBadge = `<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-rose-500/10 text-rose-400 border border-rose-500/20"><span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>Ocupada</span>`;
+                    statusBadge = `<span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 rounded-pill"><span class="d-inline-block rounded-circle bg-danger me-1" style="width:6px;height:6px;"></span>Ocupada</span>`;
                 } else if (table.status === 'reservada') {
-                    statusBadge = `<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>Reservada</span>`;
+                    statusBadge = `<span class="badge bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25 rounded-pill"><span class="d-inline-block rounded-circle bg-warning me-1" style="width:6px;height:6px;"></span>Reservada</span>`;
                 } else {
-                    statusBadge = `<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-800 text-slate-400 border border-slate-700"><span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span>Bloqueada</span>`;
+                    statusBadge = `<span class="badge bg-secondary bg-opacity-10 text-secondary border border-secondary border-opacity-25 rounded-pill"><span class="d-inline-block rounded-circle bg-secondary me-1" style="width:6px;height:6px;"></span>Bloqueada</span>`;
                 }
 
                 const isSelected = table.id === selectedTableId;
-                const rowClass = isSelected ? "bg-amber-500/5 text-white" : "hover:bg-slate-900/40 text-slate-300";
-
                 const tr = document.createElement('tr');
-                tr.className = `${rowClass} transition cursor-pointer`;
+                tr.className = isSelected ? "table-active text-white" : "";
+                tr.style.cursor = "pointer";
                 tr.onclick = () => selectTable(table.id);
                 tr.innerHTML = `
-                    <td class="py-4 px-6 font-bold text-white">${table.number}</td>
-                    <td class="py-4 px-6 capitalize">${table.zone}</td>
-                    <td class="py-4 px-6 font-semibold">${table.capacity} pax</td>
-                    <td class="py-4 px-6 capitalize">${table.shape === 'round' ? 'Redonda' : 'Cuadrada'}</td>
-                    <td class="py-4 px-6">${statusBadge}</td>
-                    <td class="py-4 px-6 text-right">
-                        <button onclick="selectTable(${table.id})" class="p-1.5 hover:bg-slate-800 rounded-lg text-slate-400 hover:text-white transition">
+                    <td class="py-3 px-4 fw-bold text-white">${table.number}</td>
+                    <td class="py-3 px-4 text-capitalize">${table.zone}</td>
+                    <td class="py-3 px-4 fw-semibold">${table.capacity} pax</td>
+                    <td class="py-3 px-4 text-capitalize">${table.shape === 'round' ? 'Redonda' : 'Cuadrada'}</td>
+                    <td class="py-3 px-4">${statusBadge}</td>
+                    <td class="py-3 px-4 text-end">
+                        <button onclick="selectTable(${table.id})" class="btn btn-sm btn-link text-secondary p-0">
                             <i class="fa-solid fa-chevron-right"></i>
                         </button>
                     </td>
@@ -701,73 +728,63 @@
             });
         }
 
-        // ACCIÓN: SELECCIONAR MESA (Carga datos en la barra lateral derecha)
         function selectTable(id) {
             selectedTableId = id;
             const table = tables.find(t => t.id === id);
 
-            // Resaltar mesa en plano y lista
             renderActiveView();
 
-            // Intercambiar visibilidad del sidebar (Empty State vs Formulario)
-            document.getElementById('empty-state-sidebar').classList.add('hidden');
-            document.getElementById('editor-form-sidebar').classList.remove('hidden');
-            document.getElementById('btn-delete-table').classList.remove('hidden');
+            document.getElementById('empty-state-sidebar').classList.add('d-none');
+            document.getElementById('editor-form-sidebar').classList.remove('d-none');
+           // document.getElementById('btn-delete-table').classList.remove('d-none');
 
-            // Cargar los campos del formulario
             document.getElementById('edit-table-number').value = table.number;
             document.getElementById('edit-table-capacity').value = table.capacity;
             document.getElementById('edit-table-zone').value = table.zone;
 
-            // Actualizar botones de estado de la mesa en el sidebar
             updateStatusButtonsInSidebar(table.status);
-
-            // Actualizar botones de forma de la mesa en el sidebar
             updateShapeButtonsInSidebar(table.shape);
 
-            // Cargar historial de reservas simuladas correspondientes al estado
             const reservationContainer = document.getElementById('sidebar-reservation-list');
             reservationContainer.innerHTML = '';
 
             const listReservations = dummyReservations[table.status] || [];
             if (listReservations.length === 0) {
                 reservationContainer.innerHTML = `
-                    <div class="p-3 bg-slate-900/40 border border-slate-800/60 rounded-xl text-center text-xs text-slate-500">
+                    <div class="p-3 bg-dark-card border border-dark-custom rounded-3 text-center text-secondary small">
                         No hay reservas agendadas hoy.
                     </div>
                 `;
             } else {
                 listReservations.forEach(res => {
-                    let pillClass = "bg-amber-500/10 text-amber-400 border border-amber-500/20";
-                    if(res.status === "Sentado") pillClass = "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20";
+                    let badgeClass = "bg-warning bg-opacity-10 text-warning border-warning";
+                    if(res.status === "Sentado") badgeClass = "bg-success bg-opacity-10 text-success border-success";
 
                     reservationContainer.innerHTML += `
-                        <div class="p-3 bg-slate-900/50 border border-slate-800/80 rounded-xl flex justify-between items-center">
+                        <div class="p-3 bg-dark-card border border-dark-custom rounded-3 d-flex justify-content-between align-items-center">
                             <div>
-                                <h5 class="text-xs font-bold text-white">${res.guest}</h5>
-                                <div class="flex items-center gap-2 mt-1 text-[10px] text-slate-400">
-                                    <span><i class="fa-solid fa-clock mr-1"></i>${res.time}</span>
+                                <h5 class="small fw-bold text-white m-0">${res.guest}</h5>
+                                <div class="d-flex align-items-center gap-2 mt-1 text-secondary" style="font-size: 0.7rem;">
+                                    <span><i class="fa-solid fa-clock me-1"></i>${res.time}</span>
                                     <span>•</span>
                                     <span>${res.pax} Pax</span>
                                 </div>
                             </div>
-                            <span class="px-2 py-0.5 rounded text-[9px] font-bold ${pillClass}">${res.status}</span>
+                            <span class="badge border ${badgeClass}" style="font-size: 0.65rem;">${res.status}</span>
                         </div>
                     `;
                 });
             }
         }
 
-        // Deseleccionar todo
         function deselectTable() {
             selectedTableId = null;
-            document.getElementById('empty-state-sidebar').classList.remove('hidden');
-            document.getElementById('editor-form-sidebar').classList.add('hidden');
-            document.getElementById('btn-delete-table').classList.add('hidden');
+            document.getElementById('empty-state-sidebar').classList.remove('d-none');
+            document.getElementById('editor-form-sidebar').classList.add('d-none');
+           // document.getElementById('btn-delete-table').classList.add('d-none');
             renderActiveView();
         }
 
-        // ACCIÓN: EDITAR ESTADO DESDE EL SIDEBAR
         function setTableStatus(status) {
             if (!selectedTableId) return;
             const table = tables.find(t => t.id === selectedTableId);
@@ -776,13 +793,10 @@
             updateStatusButtonsInSidebar(status);
             renderActiveView();
             updateDailyKPIs();
-
-            // Recargar datos dinámicos de reservas que corresponden al estado
             selectTable(selectedTableId);
         }
 
         function updateStatusButtonsInSidebar(status) {
-            const btnGroup = document.getElementById('status-button-group');
             const btns = {
                 disponible: document.getElementById('status-btn-disponible'),
                 ocupada: document.getElementById('status-btn-ocupada'),
@@ -790,22 +804,20 @@
                 mantenimiento: document.getElementById('status-btn-mantenimiento')
             };
 
-            // Estructurar el estilo de activo / inactivo
             Object.keys(btns).forEach(key => {
                 if (key === status) {
-                    let activeStyles = "";
-                    if (key === 'disponible') activeStyles = "bg-emerald-500/10 border-emerald-500/50 text-emerald-300";
-                    if (key === 'ocupada') activeStyles = "bg-rose-500/10 border-rose-500/50 text-rose-300";
-                    if (key === 'reservada') activeStyles = "bg-amber-500/10 border-amber-500/50 text-amber-300";
-                    if (key === 'mantenimiento') activeStyles = "bg-slate-700/20 border-slate-500 text-slate-300";
-                    btns[key].className = `flex items-center gap-2 p-2.5 rounded-xl border text-left text-xs font-semibold transition ${activeStyles}`;
+                    let activeClass = "btn-dark border-light text-white";
+                    if (key === 'disponible') activeClass = "btn-outline-success active";
+                    if (key === 'ocupada') activeClass = "btn-outline-danger active";
+                    if (key === 'reservada') activeClass = "btn-outline-warning active";
+                    if (key === 'mantenimiento') activeClass = "btn-outline-secondary active";
+                    btns[key].className = `btn w-100 btn-sm text-start p-2 d-flex align-items-center gap-2 ${activeClass}`;
                 } else {
-                    btns[key].className = "flex items-center gap-2 p-2.5 rounded-xl border border-slate-800 text-left text-xs font-semibold text-slate-400 hover:text-white hover:bg-slate-900 transition";
+                    btns[key].className = "btn btn-outline-secondary w-100 btn-sm text-start p-2 d-flex align-items-center gap-2 text-secondary";
                 }
             });
         }
 
-        // ACCIÓN: AJUSTAR CAPACIDAD DE MESA DESDE SIDEBAR
         function adjustCapacity(amount) {
             if (!selectedTableId) return;
             const table = tables.find(t => t.id === selectedTableId);
@@ -819,7 +831,6 @@
             }
         }
 
-        // ACCIÓN: EDITAR FORMA DE LA MESA (Redonda / Cuadrada)
         function setTableShape(shape) {
             if (!selectedTableId) return;
             const table = tables.find(t => t.id === selectedTableId);
@@ -834,43 +845,32 @@
             const btnRound = document.getElementById('shape-btn-round');
 
             if (shape === 'square') {
-                btnSquare.className = "flex-grow py-1.5 text-xs font-semibold rounded-lg text-center bg-slate-800 text-white transition";
-                btnRound.className = "flex-grow py-1.5 text-xs font-semibold rounded-lg text-center text-slate-400 hover:text-white transition";
+                btnSquare.className = "btn btn-sm btn-dark text-white fw-semibold text-xs";
+                btnRound.className = "btn btn-sm text-secondary fw-semibold text-xs";
             } else {
-                btnRound.className = "flex-grow py-1.5 text-xs font-semibold rounded-lg text-center bg-slate-800 text-white transition";
-                btnSquare.className = "flex-grow py-1.5 text-xs font-semibold rounded-lg text-center text-slate-400 hover:text-white transition";
+                btnRound.className = "btn btn-sm btn-dark text-white fw-semibold text-xs";
+                btnSquare.className = "btn btn-sm text-secondary fw-semibold text-xs";
             }
         }
 
-        // ACCIÓN: GUARDADO SÍNCRONO AL ESCRIBIR EN INPUTS
         function saveLiveChanges() {
             if (!selectedTableId) return;
             const table = tables.find(t => t.id === selectedTableId);
-            
-            // Etiqueta número
             table.number = document.getElementById('edit-table-number').value.trim() || table.id.toString();
             
-            // Zona/Sala física
             const prevZone = table.zone;
             const newZone = document.getElementById('edit-table-zone').value;
             table.zone = newZone;
 
-            // Si cambiamos la zona de la mesa, forzar renderizado y refrescar
-            if (prevZone !== newZone) {
-                renderActiveView();
-            } else {
-                renderActiveView();
-            }
+            renderActiveView();
         }
 
-        // ACCIÓN: GENERAR UNA NUEVA MESA AL SISTEMA (Añadir Mesa)
         function addNewTable() {
             const nextId = tables.length > 0 ? Math.max(...tables.map(t => t.id)) + 1 : 1;
             
-            // Crear mesa por defecto según la zona actual
             let letter = "M";
-            if (activeZone === 'terraza') letter = "T";
-            if (activeZone === 'barra') letter = "B";
+            if (activeZone === 'mezaninne') letter = "M";
+           // if (activeZone === 'barra') letter = "B";
 
             const newTable = {
                 id: nextId,
@@ -879,22 +879,18 @@
                 shape: activeZone === 'barra' ? "round" : "square",
                 status: "disponible",
                 zone: activeZone,
-                x: 150 + (Math.random() * 80), // Posición inicial semi-aleatoria para evitar colisión perfecta
+                x: 150 + (Math.random() * 80),
                 y: 150 + (Math.random() * 80)
             };
 
             tables.push(newTable);
             renderActiveView();
             updateDailyKPIs();
-            
-            // Auto seleccionar la nueva mesa para editarla rápidamente
             selectTable(newTable.id);
         }
 
-        // ACCIÓN: ELIMINAR LA MESA SELECCIONADA
         function deleteSelectedTable() {
             if (!selectedTableId) return;
-            
             if (confirm("¿Estás seguro de que deseas eliminar permanentemente esta mesa de la distribución?")) {
                 tables = tables.filter(t => t.id !== selectedTableId);
                 deselectTable();
@@ -902,9 +898,7 @@
             }
         }
 
-        // CÁLCULO DE KPIS EN TIEMPO REAL (Lógica integrada en el frontend del prototipo)
         function updateDailyKPIs() {
-            // Filtrar mesas correspondientes a la zona activa para calcular KPIs realistas de la sala abierta
             const zoneTables = tables.filter(t => t.zone === activeZone);
 
             const countDisponible = zoneTables.filter(t => t.status === 'disponible').length;
@@ -912,17 +906,14 @@
             const countReservada = zoneTables.filter(t => t.status === 'reservada').length;
             const countMantenimiento = zoneTables.filter(t => t.status === 'mantenimiento').length;
 
-            // Reflejar contadores en footer
             document.getElementById('lbl-count-disponibles').innerText = countDisponible;
             document.getElementById('lbl-count-ocupadas').innerText = countOcupada;
             document.getElementById('lbl-count-reservadas').innerText = countReservada;
             document.getElementById('lbl-count-mantenimiento').innerText = countMantenimiento;
 
-            // Capacidad de asientos total
             const totalSeats = zoneTables.reduce((sum, t) => sum + (t.status !== 'mantenimiento' ? t.capacity : 0), 0);
             document.getElementById('lbl-total-seats').innerText = `${totalSeats} pax`;
 
-            // Calcular tasa de ocupación (Ocupadas / Total Operativas)
             const operativas = zoneTables.filter(t => t.status !== 'mantenimiento').length;
             const ocupadas = zoneTables.filter(t => t.status === 'ocupada').length;
             const rate = operativas > 0 ? Math.round((ocupadas / operativas) * 100) : 0;

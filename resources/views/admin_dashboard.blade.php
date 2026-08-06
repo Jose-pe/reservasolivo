@@ -37,7 +37,7 @@
       
       <a onclick="showSection('reservas_hoy')"><i class="fa-solid fa-calendar-day fa-lg" style="color: rgb(255, 255, 255);"></i> Reservas creadas hoy</a>
       <a onclick="showSection('reservas')"><i class="fa-solid fa-book fa-lg" style="color: rgb(255, 255, 255);"></i> Reservas Atendidas y Canceladas</a>
-      <a><i class="bi bi-table"></i> Gestionar Mesas y horarios</a>
+      <a href="/gestion_mesas"><i class="bi bi-table" ></i> Gestionar Mesas y horarios</a>
       <a href="{{route('admin_filtros')}}"><i class="fa-solid fa-filter fa-lg" style="color: rgb(255, 255, 255);"></i> Más filtros</a>
     
     
