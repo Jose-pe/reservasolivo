@@ -297,9 +297,14 @@ class ReservaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Reserva $reserva)
+    public function show_reservas_confirmadas()
     {
-        //
+         if (Auth::user()->role !== 'admin') {
+                return view('welcome');
+            }
+
+        $reservas_confirmadas = Reserva::whereDate('reservation_date','>=' ,now()->toDateString())->whereTime('reservation_time', '>=', now()->format('H:i'))->where('state', 'Confirmado')->orderBy('reservation_date', 'asc')->orderBy('reservation_time', 'asc')->get();
+        return response()->json($reservas_confirmadas);
     }
 
     public function email_confirmacion_reserva($id)

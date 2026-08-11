@@ -181,14 +181,16 @@
             </div>
 
             <!-- Acciones de cabecera -->
-            <div class="d-flex align-items-center gap-3">
+            <div class="d-flex align-items-center gap-3 p-2">
               
 
                 <div class="text-end small">
-                    <div class="fw-semibold text-white" id="current-date">HOY : {{ \Carbon\Carbon::now()->format('d-m-Y') }}</div>
+                    <div class="fw-semibold text-white" id="current-date">HOY : </div>
                    {{-- <div class="text-secondary" id="current-time">HORA: {{ \Carbon\Carbon::now()->format('H:i') }}</div>--}}
+                   
                     
                 </div>
+                <div class="text-secondary"> <input type="date" class="form-control" id="reservation_date" name="reservation_date"></div>
             </div>
         </header>
 
@@ -300,10 +302,10 @@
                 <div class="p-4">
                     <div class="d-flex align-items-center justify-content-between border-bottom border-dark-custom pb-3 mb-4">
                         <div>
-                            <h3 class="fw-bold text-white h6 m-0">Ficha de Configuración</h3>
+                            <h3 class="fw-bold text-white h6 m-0">Configuración de Mesa</h3>
                            
                         </div>
-                        <span class="badge bg-dark border border-dark-custom text-secondary">ID Único</span>
+                        <span id="id_mesa" class="badge bg-dark border border-dark-custom text-secondary">ID Único</span>
                     </div>
 
                     <div id="empty-state-sidebar" class="py-5 text-center">
@@ -379,15 +381,15 @@
 
                         <div class="border-top border-dark-custom pt-4">
                             <h4 class="text-secondary fw-bold text-uppercase mb-3 d-flex align-items-center gap-2" style="font-size: 0.7rem;">
-                                <i class="fa-solid fa-calendar text-amber"></i> Reservas del Turno
+                                <i class="fa-solid fa-calendar text-amber"></i> Reservas para hoy
                             </h4>
-                            <div class="d-flex flex-column gap-2" id="sidebar-reservation-list"></div>
+                            <div class="d-flex flex-column justify-content-center" id="sidebar-reservation-list"></div>
                         </div>
                     </div>
                 </div>
-
+               
                {{-- <div class="p-4 border-top border-dark-custom bg-dark-sidebar sticky-bottom">
-                    <button onclick="deleteSelectedTable()" id="btn-delete-table" class="btn btn-outline-danger w-100 fw-bold py-2 d-none">
+                    <button onclick="deleteSelectedTable()" id="btn-delete-table" class="btn btn-outline-danger w-100 fw-bold py-2 ">
                         <i class="fa-solid fa-trash-can me-2"></i>Eliminar Mesa
                     </button>
                 </div>--}}
@@ -430,55 +432,105 @@
 
     <!-- Bootstrap 5 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
+    <script src="/js/js-mesas/reservas-fetch.js"></script>
     <!-- JAVASCRIPT LOGIC -->
     <script>
+        
         //MESAS SALON PRINCIPAL 
-        let tables = [
-            { id: 1, number: "M1", capacity: 7, shape: "square", status: "disponible", zone: "salon", x: 390, y: 30 },
-            { id: 2, number: "M2", capacity: 2, shape: "square", status: "ocupada", zone: "salon", x: 570, y: 50 },
-            { id: 3, number: "M3", capacity: 2, shape: "square", status: "reservada", zone: "salon", x: 710, y: 50 },
-            { id: 4, number: "M4", capacity: 2, shape: "square", status: "disponible", zone: "salon", x: 850, y: 50 },
-            { id: 5, number: "M5", capacity: 4, shape: "square", status: "mantenimiento", zone: "salon", x: 990, y: 30 },
-            { id: 6, number: "M6", capacity: 6, shape: "square", status: "disponible", zone: "salon", x: 1010, y: 210 },
-            { id: 7, number: "M7", capacity: 7, shape: "square", status: "disponible", zone: "salon", x: 840, y: 280 },
-            { id: 8, number: "M8", capacity: 7, shape: "square", status: "reservada", zone: "salon", x: 660, y: 280 },
-            { id: 9, number: "M9", capacity: 2, shape: "square", status: "reservada", zone: "salon", x: 510, y: 310 },
-            { id: 10, number: "M10", capacity: 4, shape: "square", status: "reservada", zone: "salon", x: 350, y: 290 },
-            { id: 11, number: "M11", capacity: 4, shape: "square", status: "reservada", zone: "salon", x: 190, y: 290 },        
-            { id: 12, number: "M12", capacity: 2, shape: "square", status: "ocupada", zone: "salon", x: 50, y: 470 },
-            { id: 13, number: "M13", capacity: 2, shape: "square", status: "disponible", zone: "salon", x: 980, y: 470 }, 
-            
-         
-            { id: 14, number: "M14", capacity: 6, shape: "square", status: "disponible", zone: "mezaninne", x: 60, y: 20 },
-            { id: 15, number: "M15", capacity: 4, shape: "square", status: "disponible", zone: "mezaninne", x: 50, y: 210 },
-            { id: 16, number: "M16", capacity: 4, shape: "square", status: "disponible", zone: "mezaninne", x: 290, y: 30 },
-            { id: 17, number: "M17", capacity: 4, shape: "square", status: "disponible", zone: "mezaninne", x: 290, y: 210 },
-            { id: 18, number: "M18", capacity: 2, shape: "square", status: "disponible", zone: "mezaninne", x: 650, y: 120 },
-            { id: 19, number: "M19", capacity: 2, shape: "square", status: "disponible", zone: "mezaninne", x: 540, y: 240 },
-            { id: 20, number: "M20", capacity: 2, shape: "square", status: "disponible", zone: "mezaninne", x: 740, y: 240 },
-        ];
+        let tables = [];
+       
+        async function getTables() {
+        const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
-        const dummyReservations = {
-            disponible: [],
-            mantenimiento: [],
-            ocupada: [{ id: "R-902", guest: "Familia García", time: "14:00", pax: 4, status: "Sentado" }],
-            reservada: [
-                { id: "R-501", guest: "Carlos Martínez", time: "14:30", pax: 4, status: "Pendiente" },
-                { id: "R-102", guest: "Laura Benítez", time: "21:00", pax: 2, status: "Tardío" }
-            ]
-        };
+    try {
+        const response = await fetch('/listar_mesas', { // Cambia esta URL por la ruta GET de tu controlador en Laravel
+            method: 'GET',
+            headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken
+            }
+        });
 
+        if (!response.ok) {
+            throw new Error(`Error HTTP! Estado: ${response.status}`);
+        }
+
+        // Asignamos la respuesta en formato JSON a la variable let tables
+       tables= await response.json();
+
+        // Convertimos el objeto en un array si es necesario
+        
+        console.log('Mesas cargadas correctamente json:', tables);
+        
+        // Aquí puedes llamar a la función que dibuje o procese las mesas en tu interfaz
+         renderActiveView();
+
+    } catch (error) {
+        console.error('Error al obtener las mesas:', error);
+    }
+}
+
+    async function storeTables() {
+    // Obtenemos el token CSRF desde el meta tag de Laravel (asegúrate de que exista en tu HTML)
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+
+    for (const table of tables) {
+        try {
+            const response = await fetch('/guardar_mesas', { // Cambia '/api/tables' por tu ruta en Laravel
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                body: JSON.stringify(table)
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error en la petición: ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            console.log(`Mesa ${table.number} guardada con éxito:`, data);
+
+        } catch (error) {
+            console.error(`Error guardando la mesa ${table.number}:`, error);
+        }
+    }
+    
+    console.log("¡Proceso completado!");
+}
+
+        const hoy = new Date();
+  
+        // 2. La formateamos como AAAA-MM-DD
+        const anio = hoy.getFullYear();
+        // El mes empieza en 0 (enero), por lo que sumamos 1 y aseguramos dos dígitos
+        const mes = String(hoy.getMonth() + 1).padStart(2, '0'); 
+        const dia = String(hoy.getDate()).padStart(2, '0');
+        
+        const fechaMinima = `${anio}-${mes}-${dia}`;
+        
+        // 3. Le asignamos ese valor al atributo 'min' del input
+        // Establece la fecha actual como valor predeterminado
+        document.getElementById('reservation_date').min = fechaMinima;
+        
+
+
+       
         let selectedTableId = null;
         let activeZone = "salon";
         let activeView = "map";
         let activeShift = "almuerzo";
         let draggingElement = null;
         let dragOffset = { x: 0, y: 0 };
-
+          
         window.addEventListener('DOMContentLoaded', () => {
+            getTables();
             renderActiveView();
-            updateDailyKPIs();
+            updateDailyKPIs();          
+            
         });
 
         function setZone(zoneName) {
@@ -520,7 +572,7 @@
             renderActiveView();
         }
 
-        function setShift(shiftName) {
+      /*  function setShift(shiftName) {
             activeShift = shiftName;
             const lunchBtn = document.getElementById('btn-lunch');
             const dinnerBtn = document.getElementById('btn-dinner');
@@ -535,7 +587,7 @@
                 lunchBtn.className = "btn btn-sm text-secondary rounded-2 px-3 py-1 text-xs fw-semibold";
                 timeLabel.innerText = "Turno actual: 20:00 - 23:45";
             }
-        }
+        }*/
 
         function renderActiveView() {
             if (activeView === 'map') {
@@ -733,14 +785,15 @@
             const table = tables.find(t => t.id === id);
 
             renderActiveView();
-
+            document.getElementById('id_mesa').innerText = `ID MESA: ${table.id}`;
             document.getElementById('empty-state-sidebar').classList.add('d-none');
             document.getElementById('editor-form-sidebar').classList.remove('d-none');
-           // document.getElementById('btn-delete-table').classList.remove('d-none');
-
-            document.getElementById('edit-table-number').value = table.number;
-            document.getElementById('edit-table-capacity').value = table.capacity;
-            document.getElementById('edit-table-zone').value = table.zone;
+            //document.getElementById('btn-save-asignation').classList.remove('d-none');
+            //document.getElementById('btn-delete-asignation').classList.remove('d-none');
+            
+            //document.getElementById('edit-table-number').value = table.number;
+            //document.getElementById('edit-table-capacity').value = table.capacity;
+            //document.getElementById('edit-table-zone').value = table.zone;
 
             updateStatusButtonsInSidebar(table.status);
             updateShapeButtonsInSidebar(table.shape);
@@ -781,7 +834,9 @@
             selectedTableId = null;
             document.getElementById('empty-state-sidebar').classList.remove('d-none');
             document.getElementById('editor-form-sidebar').classList.add('d-none');
-           // document.getElementById('btn-delete-table').classList.add('d-none');
+            //document.getElementById('btn-save-asignation').classList.add('d-none');
+            //document.getElementById('btn-delete-asignation').classList.add('d-none');
+            document.getElementById('id_mesa').innerHTML = '';
             renderActiveView();
         }
 

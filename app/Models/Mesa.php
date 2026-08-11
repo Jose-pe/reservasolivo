@@ -14,9 +14,7 @@ class Mesa extends Model
         'zone',
         'status',
         'x',
-        'y',
-        'status'
-
+        'y',       
     ];
 
 }

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Mesa;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 
 class MesaController extends Controller
 {
@@ -12,8 +14,33 @@ class MesaController extends Controller
      */
     public function index()
     {
-        //
+            if (Auth::user()->role !== 'admin') {
+                    return view('welcome');
+                }
+    
+            return view('admin_mesas');
     }
+
+    public function listar_mesas()
+    {
+         if (Auth::user()->role !== 'admin') {
+                return view('welcome');
+            }
+
+        $mesas = Mesa::all();
+        return response()->json($mesas);
+    }
+    
+    public function guardar_mesas(Request $request){
+             if (Auth::user()->role !== 'admin') {
+                return view('welcome');
+            }
+        $input = $request->all();
+        $mesa = Mesa::create($input);
+        return response()->json(['success' => true, 'mesa' => $mesa], 201);
+
+    }
+
 
     /**
      * Show the form for creating a new resource.

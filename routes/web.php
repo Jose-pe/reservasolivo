@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\ReservaController;
+use App\Http\Controllers\MesaController;
 use App\Http\Controllers\EmailController;
 use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\Auth;
@@ -17,10 +18,8 @@ Route::get('/eng', function () {
 
 Auth::routes();
 
-Route::get('/gestion_mesas', function () {
-    return view('admin_mesas');
-});
 
+//CLIENTES RESERVAS
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->middleware('auth')->name('home');
 Route::get('/reservas_comensales', [App\Http\Controllers\ReservaController::class, 'index'])->name('reservas_comensales');
 Route::get('/reservas_fechas', [App\Http\Controllers\ReservaController::class, 'reservas_fecha'])->name('reservas_fechas');
@@ -38,7 +37,7 @@ Route::get('/reservas_telefono', [App\Http\Controllers\ReservaController::class,
 Route::get('/cliente_dashboard', [App\Http\Controllers\ReservaController::class, 'cliente_dashboard'])->middleware('auth')->name('cliente_dashboard');
 Route::post('/reserva_delete/{id}', [App\Http\Controllers\ReservaController::class, 'destroy'])->middleware('auth')->name('reserva_delete');
 
-
+//ADMIN RESERVAS
 Route::get('/admin_login', [App\Http\Controllers\ReservaController::class, 'admin_login'])->name('admin_login');
 
 Route::get('/admin_dashboard', [App\Http\Controllers\ReservaController::class, 'admin_dashboard'])->middleware('admin','auth')->name('admin_dashboard');
@@ -53,7 +52,7 @@ Route::get('/admin_filtrar_email', [App\Http\Controllers\ReservaController::clas
 Route::get('/admin_filtrar_fecha', [App\Http\Controllers\ReservaController::class, 'admin_filtrar_fecha'])->middleware('auth','admin')->name('admin_filtrar_fecha');
 Route::get('/admin_filtrar_etiqueta', [App\Http\Controllers\ReservaController::class, 'admin_filtrar_etiqueta'])->middleware('auth','admin')->name('admin_filtrar_etiqueta');
 //Route::get('/enviar_mail_confirmacion/{id}', [App\Http\Controllers\ReservaController::class, 'email_confirmacion_reserva'])->middleware('auth')->name('enviar_mail_confirmacion');
-
+//REPORTES
 Route::get('/reservas_reporte', [App\Http\Controllers\ReservaController::class, 'reporte_reservas_tomorrow'])->middleware('auth','admin')->name('reservas_reporte');
 Route::get('/reservas_reporte_hoy', [App\Http\Controllers\ReservaController::class, 'reporte_reservas_today'])->middleware('auth','admin')->name('reservas_reporte_hoy');
 
@@ -61,8 +60,13 @@ Route::get('/show_superadmin_reservas', [App\Http\Controllers\ReservaController:
 Route::get('/admin_filtrar_by_admin', [App\Http\Controllers\ReservaController::class, 'admin_filtrar_by_admin'])->middleware('auth','admin')->name('admin_filtrar_by_admin');
 Route::get('/super_admin_filtrar_fecha', [App\Http\Controllers\ReservaController::class, 'super_admin_filtrar_fecha'])->middleware('auth','admin')->name('super_admin_filtrar_fecha');
 Route::get('/super_admin_filtrar_email', [App\Http\Controllers\ReservaController::class, 'super_admin_filtrar_email'])->middleware('auth','admin')->name('super_admin_filtrar_email');
+//GESTION DE MESAS Y HORAS
+Route::get('/gestion_mesas', [App\Http\Controllers\MesaController::class, 'index'])->middleware('auth','admin')->name('gestion_mesas');
+Route::get('/listar_mesas', [App\Http\Controllers\MesaController::class, 'listar_mesas'])->middleware('auth','admin')->name('listar_mesas');
+Route::post('/guardar_mesas', [App\Http\Controllers\MesaController::class, 'guardar_mesas'])->middleware('auth','admin')->name('guardar_mesas');
+Route::get('/mostrar_reservas_confirmadas', [App\Http\Controllers\ReservaController::class, 'show_reservas_confirmadas'])->middleware('auth','admin')->name('mostrar_reservas_confirmadas');
 
-
+//GOOGLE AUTH
 Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle']);
 Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 Route::post('/logoutgoogle', function (Request $request) {

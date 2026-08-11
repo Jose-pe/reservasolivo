@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('y')->default(100);        // Coordenada Y en el plano
             $table->timestamps();
         });
+    
     }
 
     /**
