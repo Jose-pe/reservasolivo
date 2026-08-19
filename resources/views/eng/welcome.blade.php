@@ -54,8 +54,7 @@
         <a class="nav-link" href="{{route('reservas_comensales')}}">Reservations</a>
         <a class="nav-link" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">View Menu</a>
         <a class="nav-link" href="#contactanos">Contact Us</a>  
-        <a class="nav-link" href="#contactanos"></a>   
-        <a class="nav-link" href="https://www.tripadvisor.com.pe/UserReviewEdit-g294314-d23813749-Il_Olivo_Trattoria_Ristorante-Cusco_Cusco_Region.html" target="_blank"><i class="fa fa-tripadvisor" aria-hidden="true"></i></a>
+        <a class="nav-link" href="https://www.tripadvisor.com.pe/UserReviewEdit-g294314-d23813749-Il_Olivo_Trattoria_Ristorante-Cusco_Cusco_Region.html" target="_blank">Tripadvisor <i class="fa fa-tripadvisor" aria-hidden="true"></i></a>
       </div>   
       <div class="d-flex ms-auto justify-content-start justify-content-lg-end mt-3 me-3 mt-lg-0">
          <a class="nav-link pe-2" href="/"> ES </a> / 
