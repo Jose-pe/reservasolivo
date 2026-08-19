@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 
 class Reserva extends Model
 {
+   
      protected $fillable = [
 
         'name',
@@ -27,4 +30,9 @@ class Reserva extends Model
         'id_admin',
         'id_mesa',
     ];
+
+    public function mesas()
+    {
+        return $this->belongsTo(Mesa::class, 'id_mesa','id');
+    }
 }

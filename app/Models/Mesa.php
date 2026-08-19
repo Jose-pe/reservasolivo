@@ -4,8 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 class Mesa extends Model
 {
+    
     protected $fillable = [
 
         'number',
@@ -16,5 +18,9 @@ class Mesa extends Model
         'x',
         'y',       
     ];
+
+     public function reservas(){
+      return $this->hasMany(Reserva::class, 'id_reserva','id');
+     }  
 
 }

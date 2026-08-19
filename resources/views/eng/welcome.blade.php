@@ -21,16 +21,17 @@
     <link rel="preconnect" href="https://unpkg.com">
 
     <link rel="icon" type="image/png" href="favicon.ico">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/olivo.css" rel="stylesheet">
     
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" media="print" onload="this.media='all'">
     <link href="/css/olivo_experiencias.css" rel="stylesheet" media="print" onload="this.media='all'">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" media="print" onload="this.media='all'">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" media="print" onload="this.media='all'">
 </head>
 
@@ -52,7 +53,9 @@
         <a class="nav-link" id="link-galeria-mobile" href="#galeria-mobile">Gallery</a>
         <a class="nav-link" href="{{route('reservas_comensales')}}">Reservations</a>
         <a class="nav-link" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">View Menu</a>
-        <a class="nav-link" href="#contactanos">Contact Us</a>    
+        <a class="nav-link" href="#contactanos">Contact Us</a>  
+        <a class="nav-link" href="#contactanos"></a>   
+        <a class="nav-link" href="https://www.tripadvisor.com.pe/UserReviewEdit-g294314-d23813749-Il_Olivo_Trattoria_Ristorante-Cusco_Cusco_Region.html" target="_blank"><i class="fa fa-tripadvisor" aria-hidden="true"></i></a>
       </div>   
       <div class="d-flex ms-auto justify-content-start justify-content-lg-end mt-3 me-3 mt-lg-0">
          <a class="nav-link pe-2" href="/"> ES </a> / 

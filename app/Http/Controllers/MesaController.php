@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Mesa;
+use App\Models\Reserva;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -39,6 +40,12 @@ class MesaController extends Controller
         $mesa = Mesa::create($input);
         return response()->json(['success' => true, 'mesa' => $mesa], 201);
 
+    }
+
+    public function mostrar_reserva($id){
+
+        $reserva = Reserva::findOrFail($id);        
+        return view('admin_mesas')->with(['reserva' => $reserva]);
     }
 
 

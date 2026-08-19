@@ -110,6 +110,7 @@
           <table class="table table-hover">
             <thead>
               <tr>
+                <td>Id</td>
                 <th>Cliente</th>
                 <th>E-mail</th>
                 <th>Telefono</th>
@@ -131,7 +132,8 @@
             <tbody>
               
               @foreach ($reservas as $reserva)
-                  <tr>
+                <tr  data-href="/gestion_mesas/" onclick="irAlEnlace(this)" style="cursor: pointer;">
+                
                 <td>{{$reserva->name}}</td>
                 <td>{{$reserva->email}}</td>
                 <td>{{$reserva->phone}}</td>
@@ -202,6 +204,7 @@
           <table class="table table-hover">
             <thead>
               <tr>
+                <th>#</th>
                 <th>Cliente</th>
                 <th>E-mail</th>
                 <th>Telefono</th>
@@ -222,7 +225,8 @@
             <tbody>
               
               @foreach ($reservas_siguientes as $reserva_siguiente)
-                  <tr>
+                <tr id="fila_{{ $reserva_siguiente->id }}" data-href="{{ url('/gestion_mesas/' . $reserva_siguiente->id) }}"  onclick="irAlEnlace(this)" style="cursor: pointer;">       
+                <td id="id_reserva">{{$reserva_siguiente->id}}</td>
                 <td>{{$reserva_siguiente->name}}</td>
                 <td>{{$reserva_siguiente->email}}</td>
                 <td>{{$reserva_siguiente->phone}}</td>
@@ -285,6 +289,7 @@
           <table class="table table-hover">
             <thead>
               <tr>
+                
                 <th>Cliente</th>
                 <th>E-mail</th>
                 <th>Telefono</th>
@@ -641,6 +646,19 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+let fila = document.getElementById('fila');
+function irAlEnlace(fila) {
+  // Obtenemos la URL guardada en el atributo data-href
+  
+  const url = fila.getAttribute('data-href');
+  const id_reserva = document.getElementById('id_reserva').innerText;
+  if (url) {
+    window.location.href = url;// Redirige en la misma pestaña
+    // O usa window.open(url, '_blank'); si quieres abrir en pestaña nueva
+  }
+}
+
+
   const modal = new bootstrap.Modal(document.getElementById('reservaModal'));
   function openModal(){
   

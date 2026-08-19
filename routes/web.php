@@ -61,7 +61,7 @@ Route::get('/admin_filtrar_by_admin', [App\Http\Controllers\ReservaController::c
 Route::get('/super_admin_filtrar_fecha', [App\Http\Controllers\ReservaController::class, 'super_admin_filtrar_fecha'])->middleware('auth','admin')->name('super_admin_filtrar_fecha');
 Route::get('/super_admin_filtrar_email', [App\Http\Controllers\ReservaController::class, 'super_admin_filtrar_email'])->middleware('auth','admin')->name('super_admin_filtrar_email');
 //GESTION DE MESAS Y HORAS
-Route::get('/gestion_mesas', [App\Http\Controllers\MesaController::class, 'index'])->middleware('auth','admin')->name('gestion_mesas');
+Route::get('/gestion_mesas/{id}', [App\Http\Controllers\MesaController::class, 'mostrar_reserva'])->middleware('auth','admin')->name('gestion_mesas');
 Route::get('/listar_mesas', [App\Http\Controllers\MesaController::class, 'listar_mesas'])->middleware('auth','admin')->name('listar_mesas');
 Route::post('/guardar_mesas', [App\Http\Controllers\MesaController::class, 'guardar_mesas'])->middleware('auth','admin')->name('guardar_mesas');
 Route::get('/mostrar_reservas_confirmadas', [App\Http\Controllers\ReservaController::class, 'show_reservas_confirmadas'])->middleware('auth','admin')->name('mostrar_reservas_confirmadas');
