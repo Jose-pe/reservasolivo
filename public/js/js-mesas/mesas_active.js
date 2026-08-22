@@ -354,38 +354,11 @@
             //document.getElementById('edit-table-zone').value = table.zone;
 
             updateStatusButtonsInSidebar(table.status);
-            updateShapeButtonsInSidebar(table.shape);
+            //updateShapeButtonsInSidebar(table.shape);
 
-            const reservationContainer = document.getElementById('sidebar-reservation-list');
-            reservationContainer.innerHTML = '';
+          
 
-            const listReservations = dummyReservations[table.status] || [];
-            if (listReservations.length === 0) {
-                reservationContainer.innerHTML = `
-                    <div class="p-3 bg-dark-card border border-dark-custom rounded-3 text-center text-secondary small">
-                        No hay reservas agendadas hoy.
-                    </div>
-                `;
-            } else {
-                listReservations.forEach(res => {
-                    let badgeClass = "bg-warning bg-opacity-10 text-warning border-warning";
-                    if(res.status === "Sentado") badgeClass = "bg-success bg-opacity-10 text-success border-success";
-
-                    reservationContainer.innerHTML += `
-                        <div class="p-3 bg-dark-card border border-dark-custom rounded-3 d-flex justify-content-between align-items-center">
-                            <div>
-                                <h5 class="small fw-bold text-white m-0">${res.guest}</h5>
-                                <div class="d-flex align-items-center gap-2 mt-1 text-secondary" style="font-size: 0.7rem;">
-                                    <span><i class="fa-solid fa-clock me-1"></i>${res.time}</span>
-                                    <span>•</span>
-                                    <span>${res.pax} Pax</span>
-                                </div>
-                            </div>
-                            <span class="badge border ${badgeClass}" style="font-size: 0.65rem;">${res.status}</span>
-                        </div>
-                    `;
-                });
-            }
+           
         }
 
         function deselectTable() {

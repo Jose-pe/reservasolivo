@@ -110,7 +110,7 @@
           <table class="table table-hover">
             <thead>
               <tr>
-                <td>Id</td>
+                <td>#</td>
                 <th>Cliente</th>
                 <th>E-mail</th>
                 <th>Telefono</th>
@@ -126,14 +126,13 @@
                 <th>Estado de Reserva</th>  
                 <th>Observaciones</th>              
                 <th>Acciones</th>
-
               </tr>
             </thead>
             <tbody>
               
               @foreach ($reservas as $reserva)
                 <tr  data-href="/gestion_mesas/" onclick="irAlEnlace(this)" style="cursor: pointer;">
-                
+                <td>{{$reserva->id}}</td>
                 <td>{{$reserva->name}}</td>
                 <td>{{$reserva->email}}</td>
                 <td>{{$reserva->phone}}</td>
@@ -258,9 +257,8 @@
                 @endif  
 
                 <td>{{$reserva_siguiente->observation}}</td>
-                  <td>           
-                 
-                    <form action="{{ route('admin_edit_reserva', ['id' => $reserva_siguiente->id]) }}" method="get" style="display:inline-block;">     
+                  <td>        
+                 <form action="{{ route('admin_edit_reserva', ['id' => $reserva_siguiente->id]) }}" method="get" style="display:inline-block;">     
                     @csrf
                     @method('GET')           
                     <button type="submit" class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i></button>
@@ -270,7 +268,8 @@
                     @csrf
                     @method('POST')
                     <button type="submit" class="btn btn-sm btn-danger"><i class="fa-regular fa-circle-xmark fa-lg" style="color: rgb(255, 255, 255);"></i></button>
-                  </form>                </td>
+                  </form>                
+                </td>
               </tr>
               @endforeach
             </tbody>
@@ -695,7 +694,7 @@ const hoy = new Date();
   const fechaMinima = `${anio}-${mes}-${dia}`;
   
   // 3. Le asignamos ese valor al atributo 'min' del input
-  document.getElementById('reservation_date').min = fechaMinima;
+  //document.getElementById('reservation_date').min = fechaMinima;
 
 
 function procesarFormulario(event) {
