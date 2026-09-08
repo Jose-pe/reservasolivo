@@ -10,6 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- FontAwesome para iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -114,7 +115,7 @@
 <body class="overflow-hidden vh-100 d-flex">
 
     <!-- BARRA LATERAL DE NAVEGACIÓN PRINCIPAL -->
-    <aside class="bg-dark-sidebar border-end border-dark-custom d-flex flex-column justify-content-between flex-shrink-0" style="width: 260px;">
+    <aside class="bg-dark-sidebar border-end border-dark-custom d-flex flex-column justify-content-start flex-shrink-0" style="width: 300px;">
         <div>
             <!-- Header de Marca -->
             <div class="p-3 border-bottom border-dark-custom d-flex items-center align-items-center gap-3">
@@ -128,43 +129,22 @@
             </div>
 
             <!-- Enlaces de navegación -->
-            <nav class="p-3">
-                <div class="d-flex flex-column gap-1">
-                   
-                    <a href="#" class="nav-link text-amber bg-dark-card p-2.5 rounded-3 d-flex align-items-center gap-3 border border-dark-custom fw-medium">
-                        <i class="fa-solid fa-layer-group text-lg" style="width: 20px;"></i>
-                        <span class="fw-medium small">Distribución de Mesas</span>
-                    </a>
-                    <a href="#" class="nav-link text-secondary p-2.5 rounded-3 d-flex align-items-center justify-content-between gap-3">
-                        <div class="d-flex align-items-center gap-3">
-                            <i class="fa-solid fa-calendar-check text-lg" style="width: 20px;"></i>
-                            <span class="fw-medium small">Reservas</span>
-                        </div>
-                        <span class="badge bg-amber rounded-pill text-dark">12</span>
-                    </a>
-                    <a href="#" class="nav-link text-secondary p-2.5 rounded-3 d-flex align-items-center gap-3">
-                        <i class="fa-solid fa-clock text-lg" style="width: 20px;"></i>
-                        <span class="fw-medium small">Horarios y Turnos</span>
-                    </a>
-                   
-                    
-                </div>
-            </nav>
+           
+        </div>
+       
+        
+        <div class="d-flex justify-content-center text-center mt-3">
+             <h4 class="text-secondary fw-bold text-uppercase mb-3 d-flex align-items-center gap-2" style="font-size: 0.7rem;">
+                                <i class="fa-solid fa-calendar text-amber text-center "></i> Reservas para asingnar mesa
+                            </h4>
+        </div>
+        
+        <div class="m-1 overflow-auto" id="container-reservas">
+            
         </div>
 
         <!-- Perfil de usuario -->
-        <div class="p-3 border-top border-dark-custom">
-            <div class="d-flex align-items-center gap-3 p-2 bg-dark-card rounded-3 border border-dark-custom">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100" alt="Avatar" class="rounded-2 object-fit-cover" style="width: 38px; height: 38px;">
-                <div class="overflow-hidden">
-                    <h4 class="small fw-semibold text-white m-0 text-truncate">Sofía Torres</h4>
-                    <p class="text-secondary m-0" style="font-size: 0.7rem;">Maitre / Admin</p>
-                </div>
-                <button class="btn btn-link text-secondary ms-auto p-0 hover-danger">
-                    <i class="fa-solid fa-right-from-bracket"></i>
-                </button>
-            </div>
-        </div>
+        
     </aside>
 
     <!-- CONTENEDOR PRINCIPAL -->
@@ -185,12 +165,17 @@
               
 
                 <div class="text-end small">
-                    <div class="fw-semibold text-white" id="current-date">HOY : </div>
+                    <div class="fw-semibold text-white" id="current-date">Fecha: </div>
                    {{-- <div class="text-secondary" id="current-time">HORA: {{ \Carbon\Carbon::now()->format('H:i') }}</div>--}}
                    
                     
                 </div>
+               
                 <div class="text-secondary"> <input type="date" class="form-control" id="reservation_date_control" name="reservation_date_control"></div>
+                <div class="text-secondary"> <input type="time" class="form-control" id="reservation_time_control" name="reservation_time_control" value="11:00"></div>
+                <div class="text-secondary"> <input type="time" disabled class="form-control" id="reservation_time_end_control" name="reservation_time_end_control" value="13:00"></div>
+ 
+                
             </div>
         </header>
 
@@ -214,7 +199,7 @@
                     <option value="disponible">Disponible</option>
                     <option value="ocupada">Ocupada</option>
                     <option value="reservada">Reservada</option>
-                    <option value="mantenimiento">Mantenimiento</option>
+                    {{--<option value="mantenimiento">Mantenimiento</option>--}}
                 </select>
 
                 <div class="btn-group p-1 bg-dark-sidebar rounded-3 border border-dark-custom">
@@ -226,8 +211,8 @@
                     </button>
                 </div>
 
-                <button onclick="addNewTable()" class="btn btn-amber btn-sm rounded-3 px-3 py-2 d-flex align-items-center gap-2 shadow-sm">
-                    <i class="fa-solid fa-plus"></i> Añadir Mesa
+                <button type="button" onclick="obtenerReservas()" class="btn btn-amber btn-sm rounded-3 px-3 py-2 d-flex align-items-center gap-2 shadow-sm">
+                    <i class="fa-solid fa-bell-concierge" style="color: rgb(16, 16, 16);"></i> Reservas
                 </button>
             </div>
         </section>
@@ -381,24 +366,43 @@
 
                         <div class="border-top border-dark-custom pt-4">
                             <h4 class="text-secondary fw-bold text-uppercase mb-3 d-flex align-items-center gap-2" style="font-size: 0.7rem;">
-                                <i class="fa-solid fa-calendar text-amber"></i> Reserva para asingnar mesa
+                                <i class="fa-solid fa-calendar text-amber"></i> Mesa Asignada:
                             </h4>
-                            <div class="d-flex flex-column justify-content-center" id="sidebar-reservation-list">
-                                    <div class="card text-white bg-dark mb-3" style="max-width: 22rem;">
-                <div class="card-header me-2"><i class="fa-solid fa-user me-2" style="color: rgb(255, 255, 255);"></i> <span id="nombre_usuario"> {{$reserva->name}} </span> <span class="badge badge bg-secondary text-white mr-2"><i class="fa-solid fa-hashtag mr-2" style="color: rgb(255, 255, 255);"> </i> <span id="id_reserva">{{$reserva->id}}</span></div>
-                <div class="card-body">
-                    <h5 class="card-title"><i class="fa-solid fa-calendar me-2" style="color: rgb(255, 255, 255);"></i><span id="reservation_date">{{$reserva->reservation_date}}</span></h5>                    
-                    <p class="card-text"> <i class="fa-solid fa-clock me-2 mt-1" style="color: rgb(255, 255, 255);"></i> <span id='reservation_time'>{{$reserva->reservation_time}}</span></p>
-                    <span class="badge bg-success text-white me-1"><i class="fa-solid fa-users me-2" style="color: rgb(250, 250, 250);"></i>Comensales: <span id="comensales"> {{$reserva->guests}} </span> </span>  <span class="badge bg-success text-white mr-2"><i class="fa-solid fa-baby me-2" style="color: rgb(255, 255, 255);"></i>Niños: <span id="ninos"> {{$reserva->kids_count}}</span></span><br> 
-                    <span class="badge bg-warning text-dark mt-2 me-1"><i class="fa-solid fa-utensils me-2" style="color: rgb(0, 0, 0);"></i><span id="service"> {{$reserva->service}}</span></span>
-                    <span class="badge bg-warning text-dark mt-2"><i class="fa-solid fa-tag me-2" style="color: rgb(0, 0, 0);"></i>{{$reserva->label}}</span> <br>
-                    <span class="badge bg-warning text-dark mt-2"><i class="fa-solid fa-cake-candles me-2" style="color: rgb(0, 0, 0);"></i>{{$reserva->special_time}}</span>
-                    </div>
-                <div class="card-footer border-success align-items-center d-flex justify-content-center">
-                <button type="button" onclick="store_detalle_reserva()" class="btn btn-success btn-sm me-2 ps-5 pe-5"><i class="fa-solid fa-floppy-disk me-2" style="color: rgb(255, 255, 255);"></i>Asignar</button>
-                {{--<button type="button" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash-can me-2" style="color: rgb(255, 255, 255);"></i>Quitar</button>--}}
-                </div>
-                </div>
+                       
+                            <div class= "card text-white bg-dark mb-3 d-flex flex-column justify-content-center" style="max-width: 22rem;" id="sidebar-reservation-list">
+                                   <div class="d-flex align-items-center justify-content-between mb-3 p-2">
+        <h6 class="text-white m-0 p-2">ID: RESERVA <span id="id_mesa"></span></h6>
+        <span id="reserva_id_lbl" class="badge bg-amber text-dark fw-bold p-2"></span>
+        </div>
+                                <h6 id="reserva_cliente_name" class="text-amber fw-bold mb-2 p-2">Nombre Cliente</h6>
+        
+        <div class="text-white small mb-1 p-2">
+            <i class="fa-regular fa-calendar me-1"></i>
+            <span id="reserva_date_lbl">YYYY-MM-DD</span>
+        </div>
+        
+        <div class="text-white small mb-1 p-2">
+            <i class="fa-regular fa-clock me-1"></i>
+            <span id="reserva_horario_lbl">00:00 - 00:00</span>
+        </div>
+
+        <div class="text-white small mb-1 p-2">
+            <i class="fa-solid fa-users me-1"></i>
+            <span id="reserva_pax_lbl">Comensales: 0</span>
+        </div>
+
+        <div class="d-flex gap-2 mt-2 p-2">
+          
+            <span  class="badge bg-warning text-dark p-2">  <i class="fa-solid fa-utensils me-2" style="color: rgb(5, 5, 5);"></i> <span id="reserva_servicio_lbl"> Servicio </span></span>
+            
+        </div>
+        <hr>
+          <div class="d-flex gap-2 mt-2 p-2">
+           <button id="btn-quitar-asignacion" type="button"  class="btn btn-danger btn-sm"><i class="fa-solid fa-rotate-left fa-sm pe-2" style="color: rgb(255, 255, 255);"></i>Quitar Asignación</button>
+           <button id="btn-atendido" onclick="mesas_atendido()" type="button" class="btn btn-warning btn-sm"><i class="fa-solid fa-square-check fa-sm pe-2" style="color: rgb(0, 0, 0);"></i>Atendido</button>
+        </div>                     
+                
+              
                             </div>
                         </div>
                     </div>
@@ -446,11 +450,12 @@
                 </div>
             </div>
         </footer>
+
     </main>
 
     <!-- Bootstrap 5 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/js/js-mesas/detalle_reservas_guardar.js"></script>
+    <script src="/js/js-mesas/mesas.js"></script>
     
     
 </body>

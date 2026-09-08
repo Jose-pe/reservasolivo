@@ -33,6 +33,28 @@
     }
 }
 
+const fechaSeleccionada = document.getElementById('reservation_date_control');
+
+fechaSeleccionada.addEventListener('change', (event) => {
+   const selectdate = event.target.value;
+   fetch(`/mostrar_porfecha?fecha=${selectdate}`, {
+    method: 'GET',
+    headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+    }
+})
+.then(response => response.json())
+.then(data => {
+    console.log('Resultados:', data);
+    // Actualiza tu vista aquí
+})
+.catch(error => console.error('Error:', error));
+});// Formato esperado: 'YYYY-MM-DD'
+
+
+
+
     async function storeTables() {
     // Obtenemos el token CSRF desde el meta tag de Laravel (asegúrate de que exista en tu HTML)
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
@@ -505,3 +527,8 @@
             const rate = operativas > 0 ? Math.round((ocupadas / operativas) * 100) : 0;
             document.getElementById('lbl-occupancy-rate').innerText = `${rate}%`;
         }
+
+
+
+       
+           

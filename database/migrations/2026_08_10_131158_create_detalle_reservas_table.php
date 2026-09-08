@@ -15,10 +15,17 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('id_mesa');
             $table->unsignedBigInteger('id_reserva');
+            $table->string('name');
+            $table->string('comensales');
+            $table->string('service');
+            $table->integer('ninos');  
             $table->date('reservation_date');
             $table->time('reservation_time');
+            $table->time('reservation_out');
             $table->string('state_atention');
             $table->string('state_mesa');
+            $table->string('state_asignation');
+            $table->string('id_admin')->nullable(); 
             $table->timestamps();
 
             $table->foreign('id_mesa')->references('id')->on('mesas');

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('reservas', function (Blueprint $table) {
-               $table->bigInteger('id_mesa')->nullable();
+           $table->string('state_asignation')->default('unasingnation')->nullable();
         });
     }
 

@@ -2,7 +2,7 @@ const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribut
 
 // Buscamos todos los elementos que su ID comience con "map-table-"
 let mesas = document.querySelectorAll('[id^="map-table-"]');
- let idNumero;
+
 // Recorremos la lista y le agregamos un evento a cada uno
   let tables = [];
        
@@ -10,7 +10,7 @@ let mesas = document.querySelectorAll('[id^="map-table-"]');
         const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
     try {
-        const response = await fetch('/listar_mesas', { // Cambia esta URL por la ruta GET de tu controlador en Laravel
+        const response = await fetch('/listar_mesas_json', { // Cambia esta URL por la ruta GET de tu controlador en Laravel
             method: 'GET',
             headers: {
                     'Content-Type': 'application/json',
@@ -301,17 +301,9 @@ let mesas = document.querySelectorAll('[id^="map-table-"]');
             });
         }
 
-
-
-
-let id_mesa = document.getElementById("id_mesa").innerText;
-let id_reserva= document.getElementById("id_reserva").innerText;
-let reservation_date = document.getElementById("reservation_date").innerText;
-let reservation_time = document.getElementById("reservation_time").innerText;
-
 function obtenerEstadoActivo() {
     // Definimos los nombres exactos de los estados según los IDs de tus botones
-    const estados = ['disponible', 'ocupada', 'reservado'];
+    const estados = ['disponible', 'ocupada', 'reservada'];
 
     // Recorremos cada estado
     for (let estado of estados) {
@@ -394,35 +386,51 @@ function obtenerEstadoActivo() {
             });
         }
 
-// --- ¿Cómo usar la función? ---
-let estadoActual = obtenerEstadoActivo();
-
-if (estadoActual) {
-     estadoActual;
-    // Aquí ya puedes usar la variable "estadoActual" para guardarlo en base de datos, etc.
-}
-
-let detalle_reserva={
-
-    id_mesa: selectedTableId,
-    id_reserva: id_reserva,
-    reservation_date: reservation_date,
-    reservation_time: reservation_time ,
-    state_atention: "Pendiente",
-    state_mesa: estadoActual,
-
-};
-
- console.log(detalle_reserva);
 
 
+    
   async function store_detalle_reserva() {
     // Obtenemos el token CSRF desde el meta tag de Laravel (asegúrate de que exista en tu HTML)
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+    
+    let id_mesa = document.getElementById("id_mesa").innerText;
+    let name = document.getElementById("nombre_usuario").innerText;
+    let comensales = document.getElementById("comensales").innerText;
+    let service = document.getElementById("service").innerText;
+    let ninos = document.getElementById("ninos").innerText;
+    let id_reserva= document.getElementById("id_reserva").innerText;
+    let reservation_date = document.getElementById("reservation_date").innerText;
+    let reservation_time = document.getElementById("reservation_time").innerText;
+    
+    let [horas, minutos] = reservation_time.split(':').map(Number);
+    
+    horas+= 2;
+    let horaFinal = `${String(horas).padStart(2, '0')}:${String(minutos).padStart(2, '0')}`;
+    
+    let estadoActual = obtenerEstadoActivo();
+    if (estadoActual) {
+     estadoActual;
+    // Aquí ya puedes usar la variable "estadoActual" para guardarlo en base de datos, etc.
+    }
 
+    let detalle_reserva = {
+        id_mesa: id_mesa,
+        name:name,
+        comensales: comensales,
+        service: service,
+        ninos: ninos,
+        id_reserva: id_reserva,
+        reservation_date: reservation_date,
+        reservation_time: reservation_time,
+        reservation_out: horaFinal,
+        state_atention: "Pendiente",
+        state_mesa: estadoActual,
+    };
+
+    console.log("DETALLE RESERVA" , detalle_reserva);
     
         try {
-            const response = await fetch('/detalle_reservas_guardar', { // Cambia '/api/tables' por tu ruta en Laravel
+            const response = await fetch('/guardar_detalle_reserva', { // Cambia '/api/tables' por tu ruta en Laravel
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -444,5 +452,30 @@ let detalle_reserva={
         }
     
     
-    console.log("¡Proceso completado!");
+    console.log("¡Detalle de Reserva Guardado!");
 }
+
+
+function updateDailyKPIs() {
+            const zoneTables = tables.filter(t => t.zone === activeZone);
+
+            const countDisponible = zoneTables.filter(t => t.status === 'disponible').length;
+            const countOcupada = zoneTables.filter(t => t.status === 'ocupada').length;
+            const countReservada = zoneTables.filter(t => t.status === 'reservada').length;
+            const countMantenimiento = zoneTables.filter(t => t.status === 'mantenimiento').length;
+
+            document.getElementById('lbl-count-disponibles').innerText = countDisponible;
+            document.getElementById('lbl-count-ocupadas').innerText = countOcupada;
+            document.getElementById('lbl-count-reservadas').innerText = countReservada;
+            document.getElementById('lbl-count-mantenimiento').innerText = countMantenimiento;
+
+            const totalSeats = zoneTables.reduce((sum, t) => sum + (t.status !== 'mantenimiento' ? t.capacity : 0), 0);
+            document.getElementById('lbl-total-seats').innerText = `${totalSeats} pax`;
+
+            const operativas = zoneTables.filter(t => t.status !== 'mantenimiento').length;
+            const ocupadas = zoneTables.filter(t => t.status === 'ocupada').length;
+            const rate = operativas > 0 ? Math.round((ocupadas / operativas) * 100) : 0;
+            document.getElementById('lbl-occupancy-rate').innerText = `${rate}%`;
+        }
+
+       

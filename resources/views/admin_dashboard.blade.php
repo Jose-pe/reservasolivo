@@ -37,7 +37,7 @@
       
       <a onclick="showSection('reservas_hoy')"><i class="fa-solid fa-calendar-day fa-lg" style="color: rgb(255, 255, 255);"></i> Reservas creadas hoy</a>
       <a onclick="showSection('reservas')"><i class="fa-solid fa-book fa-lg" style="color: rgb(255, 255, 255);"></i> Reservas Atendidas y Canceladas</a>
-      <a href="/gestion_mesas"><i class="bi bi-table" ></i> Gestionar Mesas y horarios</a>
+      <a href="gestion_mesas_query"><i class="bi bi-table" ></i> Gestionar Mesas y horarios</a>
       <a href="{{route('admin_filtros')}}"><i class="fa-solid fa-filter fa-lg" style="color: rgb(255, 255, 255);"></i> Más filtros</a>
     
     
@@ -110,7 +110,7 @@
           <table class="table table-hover">
             <thead>
               <tr>
-                <td>#</td>
+                
                 <th>Cliente</th>
                 <th>E-mail</th>
                 <th>Telefono</th>
@@ -131,8 +131,8 @@
             <tbody>
               
               @foreach ($reservas as $reserva)
-                <tr  data-href="/gestion_mesas/" onclick="irAlEnlace(this)" style="cursor: pointer;">
-                <td>{{$reserva->id}}</td>
+                <tr>    
+                
                 <td>{{$reserva->name}}</td>
                 <td>{{$reserva->email}}</td>
                 <td>{{$reserva->phone}}</td>
@@ -203,7 +203,7 @@
           <table class="table table-hover">
             <thead>
               <tr>
-                <th>#</th>
+                
                 <th>Cliente</th>
                 <th>E-mail</th>
                 <th>Telefono</th>
@@ -224,8 +224,8 @@
             <tbody>
               
               @foreach ($reservas_siguientes as $reserva_siguiente)
-                <tr id="fila_{{ $reserva_siguiente->id }}" data-href="{{ url('/gestion_mesas/' . $reserva_siguiente->id) }}"  onclick="irAlEnlace(this)" style="cursor: pointer;">       
-                <td id="id_reserva">{{$reserva_siguiente->id}}</td>
+                <tr>       
+                
                 <td>{{$reserva_siguiente->name}}</td>
                 <td>{{$reserva_siguiente->email}}</td>
                 <td>{{$reserva_siguiente->phone}}</td>

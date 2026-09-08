@@ -27,12 +27,11 @@ class Reserva extends Model
         'pay_state',
         'state',
         'observation',
-        'id_admin',
-        'id_mesa',
+        'id_admin',  
+        'state_asignation'      
     ];
-
-    public function mesas()
-    {
-        return $this->belongsTo(Mesa::class, 'id_mesa','id');
-    }
+  
+    public function mesas(){
+      return $mesa->belongsToMany(Mesa::class);
+     }  
 }
