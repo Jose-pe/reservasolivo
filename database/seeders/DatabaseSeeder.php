@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@ilolivo.com',
             'role' => 'admin',
             'password' => Hash::make('pass-olivo-01'),
-        ]);*/
+        ]);
 
           User::create([
             'name' => 'Reservas_General',
@@ -38,7 +38,14 @@ class DatabaseSeeder extends Seeder
             'role' => 'admin',
             'password' => Hash::make('comercial-campanayoc-079'),
         ]);
+    */
 
+        User::create([
+            'name' => 'Marketing_General',
+            'email' => 'marketing@campanayoc.com',
+            'role' => 'admin',
+            'password' => Hash::make('marketing-campanayoc-081'),
+        ]);
 
     }
 }
