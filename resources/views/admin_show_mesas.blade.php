@@ -110,6 +110,12 @@
             border-color: #f59e0b !important;
             transform: scale(1.05);
         }
+        /* Se aplica desde 1520px hacia abajo */
+       @media screen and (max-width: 1525px) {
+        body {
+            zoom: 80%;
+        }
+        }
     </style>
 </head>
 <body class="vh-100 d-flex">
