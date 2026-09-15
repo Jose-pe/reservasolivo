@@ -111,9 +111,10 @@
             transform: scale(1.05);
         }
         /* Se aplica desde 1520px hacia abajo */
-       @media screen and (max-width: 1525px) {
+       @media(max-width: 1625px) {
         body {
-            zoom: 80%;
+            zoom: 80% !important;
+            height: 125vh  !important;
         }
         }
     </style>
