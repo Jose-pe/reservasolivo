@@ -349,7 +349,7 @@
         </div>
         <div class="col-12 col-md-6 d-flex flex-column align-items-center align-self-md-center align-items-md-end">
           <ul class="list-unstyled mb-0">
-            <li><i class="fa-solid fa-plus me-2"></i>Libro de Reclamaciones</li>
+            <li><a href="{{route('libro-reclamaciones.create')}}"> <i class="fa-solid fa-plus me-2"></i>Libro de Reclamaciones</li></a>
           </ul>
         </div>
     </div>

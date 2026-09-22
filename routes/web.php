@@ -3,7 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\ReservaController;
+use App\Http\Controllers\ReclamoAdminController;
 use App\Http\Controllers\MesaController;
+use App\Http\Controllers\ReclamoController;
 use App\Http\Controllers\EmailController;
 use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\Auth;
@@ -51,6 +53,10 @@ Route::put('/admin_update_reserva/{id}', [App\Http\Controllers\ReservaController
 Route::get('/admin_filtrar_email', [App\Http\Controllers\ReservaController::class, 'admin_filtrar_email'])->middleware('auth','admin')->name('admin_filtrar_email');
 Route::get('/admin_filtrar_fecha', [App\Http\Controllers\ReservaController::class, 'admin_filtrar_fecha'])->middleware('auth','admin')->name('admin_filtrar_fecha');
 Route::get('/admin_filtrar_etiqueta', [App\Http\Controllers\ReservaController::class, 'admin_filtrar_etiqueta'])->middleware('auth','admin')->name('admin_filtrar_etiqueta');
+Route::get('/admin_reclamos_index', [ReclamoAdminController::class, 'index'])->middleware('auth','admin')->middleware('auth','admin')->name('admin_reclamos_index');
+Route::get('/admin_reclamos_exportar', [ReclamoAdminController::class, 'exportCsv'])->middleware('auth','admin')->name('admin_reclamos_export');
+Route::get('/admin_reclamos/{reclamo}', [ReclamoAdminController::class, 'show'])->middleware('auth','admin')->name('admin_reclamos_show');
+Route::put('/admin_reclamos/{reclamo}/responder', [ReclamoAdminController::class, 'responder'])->middleware('auth','admin')->name('admin_reclamos_responder');
 //Route::get('/enviar_mail_confirmacion/{id}', [App\Http\Controllers\ReservaController::class, 'email_confirmacion_reserva'])->middleware('auth')->name('enviar_mail_confirmacion');
 //REPORTES
 Route::get('/reservas_reporte', [App\Http\Controllers\ReservaController::class, 'reporte_reservas_tomorrow'])->middleware('auth','admin')->name('reservas_reporte');
@@ -71,8 +77,9 @@ Route::get('/get_reservas_mesas', [App\Http\Controllers\ReservaController::class
 Route::post('/update_mesas_asignacion/{id}', [App\Http\Controllers\ReservaController::class, 'update_mesas_asignacion'])->middleware('auth','admin')->name('update_mesas_asignacion');
 Route::put('/update_mesas_quitar_asignacion/{id}', [App\Http\Controllers\ReservaController::class, 'update_mesas_quitar_asignacion'])->middleware('auth','admin')->name('update_mesas_quitar_asignacion');
 Route::put('/mesas_atendido_state/{id}', [App\Http\Controllers\ReservaController::class, 'mesas_atendido_state'])->middleware('auth','admin')->name('mesas_atendido_state');
-
-
+//LIBRO DE RECLAMACIONES
+Route::get('/libro-de-reclamaciones', [ReclamoController::class, 'create'])->name('libro-reclamaciones.create');
+Route::post('/libro-de-reclamaciones', [ReclamoController::class, 'store'])->name('libro-reclamaciones.store');
 
 //DETALLE DE RESERVA
 Route::delete('/destroy_detalle_reserva/{id_reserva}', [App\Http\Controllers\DetalleReservasController::class, 'destroy_detalle_reserva'])->middleware('auth','admin')->name('destroy_detalle_reserva');

@@ -113,8 +113,8 @@
         /* Se aplica desde 1520px hacia abajo */
        @media(max-width: 1625px) {
         body {
-            zoom: 80%;
-            height: 125% ;
+            zoom: 80% !important;
+            
         }
         }
     </style>
