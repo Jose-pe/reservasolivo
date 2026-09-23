@@ -116,6 +116,7 @@
              <span class="input-group-text fw-bolder">Filtrar por Usuario</span>
              <select class="form-control" id="id_admin" name="id_admin" required>
              <option value="" selected disabled>Seleccione el usuario</option>
+                            <option value="Reserva Web">Reserva Web</option>
                             <option value="admin@ilolivo.com">admin@ilolivo.com</option>
                             <option value="reservas@campanayoc.com">reservas@campanayoc.com</option>
                             <option value="comercial@campanayoc.com">comercial@campanayoc.com</option>
