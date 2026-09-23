@@ -53,7 +53,7 @@ Route::put('/admin_update_reserva/{id}', [App\Http\Controllers\ReservaController
 Route::get('/admin_filtrar_email', [App\Http\Controllers\ReservaController::class, 'admin_filtrar_email'])->middleware('auth','admin')->name('admin_filtrar_email');
 Route::get('/admin_filtrar_fecha', [App\Http\Controllers\ReservaController::class, 'admin_filtrar_fecha'])->middleware('auth','admin')->name('admin_filtrar_fecha');
 Route::get('/admin_filtrar_etiqueta', [App\Http\Controllers\ReservaController::class, 'admin_filtrar_etiqueta'])->middleware('auth','admin')->name('admin_filtrar_etiqueta');
-Route::get('/admin_reclamos_index', [ReclamoAdminController::class, 'index'])->middleware('auth','admin')->middleware('auth','admin')->name('admin_reclamos_index');
+Route::get('/admin_reclamos_index', [ReclamoAdminController::class, 'index'])->middleware('auth','admin')->name('admin_reclamos_index');
 Route::get('/admin_reclamos_exportar', [ReclamoAdminController::class, 'exportCsv'])->middleware('auth','admin')->name('admin_reclamos_export');
 Route::get('/admin_reclamos/{reclamo}', [ReclamoAdminController::class, 'show'])->middleware('auth','admin')->name('admin_reclamos_show');
 Route::put('/admin_reclamos/{reclamo}/responder', [ReclamoAdminController::class, 'responder'])->middleware('auth','admin')->name('admin_reclamos_responder');
