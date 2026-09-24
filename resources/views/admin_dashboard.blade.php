@@ -32,12 +32,13 @@
     <!-- Sidebar -->
     <div class="col-12 p-0 sidebar">
       <h4 class="text-center py-4">🍽 Admin</h4>
-      <a class="active" onclick="showSection('dashboard')"><i class="fa-solid fa-gauge-high fa-lg" style="color: rgb(255, 255, 255);"></i> Dashboard</a>
-      <a onclick="showSection('reservas_pendientes')"><i class="fa-solid fa-thumbtack fa-lg" style="color: rgb(255, 255, 255);"></i> Reservas pendientes</a>
+      <a class="active" onclick="showSection('dashboard', this)"><i class="fa-solid fa-gauge-high fa-lg" style="color: rgb(255, 255, 255);"></i> Dashboard</a>
+      <a onclick="showSection('reservas_pendientes', this)"><i class="fa-solid fa-thumbtack fa-lg" style="color: rgb(255, 255, 255);"></i> Reservas pendientes</a>
       
-      <a onclick="showSection('reservas_hoy')"><i class="fa-solid fa-calendar-day fa-lg" style="color: rgb(255, 255, 255);"></i> Reservas creadas hoy</a>
-      <a onclick="showSection('reservas')"><i class="fa-solid fa-book fa-lg" style="color: rgb(255, 255, 255);"></i> Reservas Atendidas y Canceladas</a>
+      <a onclick="showSection('reservas_hoy', this)"><i class="fa-solid fa-calendar-day fa-lg" style="color: rgb(255, 255, 255);"></i> Reservas creadas hoy</a>
+      <a onclick="showSection('reservas', this)"><i class="fa-solid fa-book fa-lg" style="color: rgb(255, 255, 255);"></i> Reservas Atendidas y Canceladas</a>
       <a href="{{route('admin_reclamos_index')}}"><i class="fa-brands fa-leanpub fa-lg" style="color: rgb(255, 255, 255);"></i> Quejas y Reclamos </a>
+      <a  href="{{route('admin_estadisticas_reservas')}}"><i class="fa-solid fa-chart-simple fa-lg" style="color: rgb(255, 255, 255);"></i> Estadisticas </a>
       <a href="gestion_mesas_query"><i class="bi bi-table" ></i> Gestionar Mesas y horarios</a>
       <a href="{{route('admin_filtros')}}"><i class="fa-solid fa-filter fa-lg" style="color: rgb(255, 255, 255);"></i> Más filtros</a>
     
@@ -646,17 +647,7 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-let fila = document.getElementById('fila');
-function irAlEnlace(fila) {
-  // Obtenemos la URL guardada en el atributo data-href
-  
-  const url = fila.getAttribute('data-href');
-  const id_reserva = document.getElementById('id_reserva').innerText;
-  if (url) {
-    window.location.href = url;// Redirige en la misma pestaña
-    // O usa window.open(url, '_blank'); si quieres abrir en pestaña nueva
-  }
-}
+
 
 
   const modal = new bootstrap.Modal(document.getElementById('reservaModal'));
@@ -676,13 +667,42 @@ function irAlEnlace(fila) {
   modal.show();
 }
 
-function showSection(id){
-  document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
+function showSection(id, element) {
 
-  document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
-  event.target.classList.add('active');
+    document.querySelectorAll('.section').forEach(sec => {
+        sec.classList.remove('active');
+    });
+
+    document.getElementById(id)?.classList.add('active');
+
+    document.querySelectorAll('.sidebar a').forEach(a => {
+        a.classList.remove('active');
+    });
+
+    element?.classList.add('active');
+
+    localStorage.setItem('activeSection', id);
 }
+
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const activeSection =
+        localStorage.getItem('activeSection') || 'dashboard';
+
+    document.querySelectorAll('.section').forEach(sec => {
+        sec.classList.remove('active');
+    });
+
+    document.getElementById(activeSection)?.classList.add('active');
+
+    document.querySelectorAll('.sidebar a').forEach(a => {
+        a.classList.toggle(
+            'active',
+            a.dataset.section === activeSection
+        );
+    });
+});
 
 const hoy = new Date();
   

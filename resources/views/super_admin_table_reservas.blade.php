@@ -34,6 +34,7 @@
       <h4 class="text-center py-4">🍽 Admin</h4>
       <a href="{{ route('admin_dashboard') }}"><i class="fa-solid fa-gauge-high fa-lg" style="color: rgb(255, 255, 255);"></i> Dashboard</a>
        <a  href="{{route('admin_reclamos_index')}}"><i class="fa-brands fa-leanpub fa-lg" style="color: rgb(255, 255, 255);"></i> Quejas y Reclamos </a>
+         <a  href="{{route('admin_estadisticas_reservas')}}"><i class="fa-solid fa-chart-simple fa-lg" style="color: rgb(255, 255, 255);"></i> Estadisticas </a>
       <a   href="{{route('admin_filtros')}}"><i class="fa-solid fa-filter fa-lg" style="color: rgb(255, 255, 255);"></i> Más filtros</a>
       <a  class="active" href="{{route('show_superadmin_reservas')}}"><i class="fa-solid fa-users fa-lg" style="color: rgb(255, 255, 255);"></i> Ver registro de actividades</a>
 
@@ -116,7 +117,7 @@
              <span class="input-group-text fw-bolder">Filtrar por Usuario</span>
              <select class="form-control" id="id_admin" name="id_admin" required>
              <option value="" selected disabled>Seleccione el usuario</option>
-                            <option value="Reserva web">Reserva Web</option>
+                            <option value="Usuario Web">Reserva Web</option>
                             <option value="admin@ilolivo.com">admin@ilolivo.com</option>
                             <option value="reservas@campanayoc.com">reservas@campanayoc.com</option>
                             <option value="comercial@campanayoc.com">comercial@campanayoc.com</option>
