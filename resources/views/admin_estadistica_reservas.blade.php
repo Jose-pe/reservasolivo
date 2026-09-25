@@ -35,7 +35,7 @@
       <a href="{{ route('admin_dashboard') }}"><i class="fa-solid fa-gauge-high fa-lg" style="color: rgb(255, 255, 255);"></i> Dashboard</a>
       <a  href="{{route('admin_reclamos_index')}}"><i class="fa-brands fa-leanpub fa-lg" style="color: rgb(255, 255, 255);"></i> Quejas y Reclamos </a>
       <a class="active" href="#"><i class="fa-solid fa-chart-simple fa-lg" style="color: rgb(255, 255, 255);"></i> Estadisticas </a>
-       <a  href="{{route('admin_filtros')}}"><i class="fa-solid fa-filter fa-lg" style="color: rgb(255, 255, 255);"></i> Más filtros</a>
+       <a href="{{route('admin_filtros')}}"><i class="fa-solid fa-filter fa-lg" style="color: rgb(255, 255, 255);"></i> Más filtros</a>
       <a  href="{{route('show_superadmin_reservas')}}"><i class="fa-solid fa-users fa-lg" style="color: rgb(255, 255, 255);"></i> Ver registro de actividades</a>
       {{--<a onclick="showSection('horarios')"><i class="bi bi-clock"></i> Horarios</a>--}}
       {{-- <a onclick="showSection('mesas')"><i class="bi bi-table"></i> Mesas</a>
@@ -214,6 +214,14 @@
 
     const cancelado = estadisticas.map(item => item.cancelado);
 
+ /*
+    |--------------------------------------------------------------------------
+    | no Show
+    |--------------------------------------------------------------------------
+    */
+
+     const noShow = estadisticas.map(item => item.noShow);
+
 
     /*
     |--------------------------------------------------------------------------
@@ -259,6 +267,22 @@
                     backgroundColor: 'rgba(220, 53, 69, 0.75)',
 
                     borderColor: 'rgba(220, 53, 69, 1)',
+
+                    borderWidth: 1,
+
+                    borderRadius: 6,
+
+                    maxBarThickness: 50
+                },
+
+                  {
+                    label: 'No Show',
+
+                    data: noShow,
+
+                    backgroundColor: 'rgba(199, 180, 78, 0.75)',
+
+                    borderColor: 'rgba(199, 180, 78, 1)',
 
                     borderWidth: 1,
 

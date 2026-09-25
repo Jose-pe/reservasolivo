@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('comensales');
             $table->string('service');
-            $table->integer('ninos');  
+            $table->integer('ninos')->default(0);
             $table->date('reservation_date');
             $table->time('reservation_time');
             $table->time('reservation_out');
