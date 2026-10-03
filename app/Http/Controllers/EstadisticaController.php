@@ -34,7 +34,14 @@ class EstadisticaController extends Controller
                         THEN 1
                         ELSE 0
                     END
-                ) as cancelado
+                ) as cancelado,
+                SUM(
+                    CASE
+                        WHEN LOWER(state) = 'noShow'
+                        THEN 1
+                        ELSE 0
+                    END
+                ) as noshow
             ")
             ->groupByRaw('MONTH(reservation_date)')
             ->orderBy('mes')
@@ -84,6 +91,10 @@ class EstadisticaController extends Controller
 
                 'cancelado' => $registro
                     ? (int) $registro->cancelado
+                    : 0,
+
+                'noshow' => $registro
+                    ? (int) $registro->noshow
                     : 0,
             ];
         }

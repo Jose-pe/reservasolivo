@@ -9,20 +9,64 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
  <style>
-    body { background-color: #f5f6fa; }
-    .sidebar { height: 20vh; background: #1e1e2f; color: white; }
+
+  .datatype-letra {
+  font-family: "Datatype", monospace;
+  font-optical-sizing: auto;
+  font-weight: <800>;
+  font-style: bold;
+  font-variation-settings:
+    "wdth" 100;
+}
+    body { 
+      background-color: #353535 !important; 
+      color: white !important;
+
+      max-width: 100% !important;
+
+      font-family: 'Datatype', monospace !important;
+      
+      letter-spacing: 0.03rem !important; 
+    
+    }
+    .sidebar { height: 20vh; background: #1b1b1d; color: white; }
     .sidebar a { color: #ccc; text-decoration: none; display: inline-block; padding: 12px 20px; cursor:pointer; }
-    .sidebar a:hover, .sidebar a.active { background: #343a40; color: #fff; }
+    .sidebar a:hover, .sidebar a.active { background: #2d2e33; color: #f0f0f0; }
     .card { border-radius: 15px; }
     .section { display:none; }
     .section.active { display:block; }
-     td{
+    td{
       text-align: center !important;
     }
-     th{
+      th{
       text-align: center !important;
+      color: rgb(19, 150, 19) !important;
+      font-size: 1.2rem !important;
+      font-weight: bolder !important; 
+    }
+
+    h5{
+        font-size: 2.4rem;!important;
+    }
+
+    h5{
+        font-size: 2.4rem;!important;
+    }
+    .card{
+      background-color: #1b1b1d !important;
+      color: white !important;
+    }
+
+    .card-header{
+      background-color: #525252 !important;
+      color: white !important;
+
+    }
+    .text-muted{
+        color: #ccc !important;
     }
   </style>
+</head>
 </head>
 <body>
 
@@ -85,7 +129,7 @@
       <!-- Table Reservas -->
       <div class="card shadow pt-5">
         <div class="card-header d-flex justify-content-between align-items-center">
-           <div class="col-4 text-start m-3">
+           <div class="col-3 text-start m-3">
             
             <form action="{{route('super_admin_filtrar_email')}}" method="get">
                  @csrf
@@ -97,19 +141,39 @@
             </div>
             </form>
         </div>
-        <div class="col-4 text-start m-3">
-           <form action="{{route('super_admin_filtrar_fecha')}}" method="get">
-             @csrf
-             @method('GET')
-            <div class="input-group mb-3">
-            <span class="input-group-text fw-bolder">Filtrar por fecha</span>
-            <input type="date" class="form-control fw-bolder" id="reservation_date" name="reservation_date" required>
-            <button class="btn btn-primary" type="submit">Buscar</button>
-            </div>
-            </form>
+        <div class="col-2 text-start m-3">
+         
+            <form action="{{route('super_admin_filtrar_fecha')}}" method="GET" class="mb-4">
+                    @csrf
+                  @method('GET')
+                
+                  <div class="input-group mb-3">
+                    <span class="input-group-text fw-bolder">Desde</span>
+                    <input type="date" name="fecha_inicio" id="fecha_inicio"
+                          class="form-control @error('fecha_inicio') is-invalid @enderror"
+                          value="{{ request('fecha_inicio') }}">
+                  </div>
+                 @error('fecha_inicio')
+                    <span class="invalid-feedback text-danger">{{ $message }}</span>
+                @enderror
+                </div>  
+                 
+                 <div class="col-2 text-start m-3">
+                <div class="input-group mb-3">
+                <span class="input-group-text fw-bolder">Hasta</span>
+                    <input type="date" name="fecha_fin" id="fecha_fin"
+                          class="form-control @error('fecha_fin') is-invalid @enderror"
+                          value="{{ request('fecha_fin') }}">           
+                    <button type="submit" class="btn btn-primary">Filtrar</button>                  
+                </div>
+                  @error('fecha_fin')
+                  <span class="invalid-feedback text-danger">{{ $message }}</span>
+                @enderror
+                 </div>
+                
+        </form>
 
-        </div>
-        <div class="col-4 d-flex justify-content-start m-3">
+        <div class="col-3 d-flex justify-content-start m-3">
          <form action="{{route('admin_filtrar_by_admin')}}" method="get">
                 @csrf
                 @method('GET')
@@ -131,8 +195,8 @@
        
         
         </div>
-        <div class="card-body table-responsive">
-          <table class="table table-hover">
+        <div class="table-responsive">
+          <table class="table table-hover table-striped table-dark" >
             <thead>
               <tr>
                 <th>Cliente</th>
@@ -189,12 +253,12 @@
                 @if ($reserva->state === 'Atendido')
                 <td ><a class="badge bg-primary p-2">{{$reserva->state}}</a></td>
                 @endif
-                    @if ($reserva->state === 'No Show')
-                <td ><a class="badge bg-dark p-2" >{{$reserva->state}}</a></td>
+                    @if ($reserva->state === 'noShow')
+                <td ><a class="badge bg-light text-dark p-2" >{{$reserva->state}}</a></td>
                 @endif
                
                     <td>{{$reserva->observation}}</td>
-                    <td>{{$reserva->id_admin}}</td>
+                    <td >{{$reserva->id_admin}}</td>
                 
                 {{--<td class="p-0">  
                     <form action="{{ route('admin_edit_reserva', ['id' => $reserva->id]) }}" method="GET" style="display:inline-block;">

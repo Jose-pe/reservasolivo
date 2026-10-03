@@ -23,15 +23,13 @@ class DetalleReservasController extends Controller
         $reservas = DetalleReservas::all();        
         return view('admin_show_mesas')->with(['reserva' => $reservas]);
     }
-
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
         //
-    }
-
+    }    
     /**
      * Store a newly created resource in storage.
      */

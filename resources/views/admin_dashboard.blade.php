@@ -8,19 +8,65 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Datatype:wght@100..900&display=swap" rel="stylesheet">
  <style>
-    body { background-color: #f5f6fa; }
-    .sidebar { height: 20vh; background: #1e1e2f; color: white; }
+
+  .datatype-letra {
+  font-family: "Datatype", monospace;
+  font-optical-sizing: auto;
+  font-weight: <800>;
+  font-style: bold;
+  font-variation-settings:
+    "wdth" 100;
+}
+    body { 
+      background-color: #353535 !important; 
+      color: white !important;
+
+      max-width: 100% !important;
+
+      font-family: 'Datatype', monospace !important;
+      
+      letter-spacing: 0.03rem !important; 
+    
+    }
+    .sidebar { height: 20vh; background: #1b1b1d; color: white; }
     .sidebar a { color: #ccc; text-decoration: none; display: inline-block; padding: 12px 20px; cursor:pointer; }
-    .sidebar a:hover, .sidebar a.active { background: #343a40; color: #fff; }
+    .sidebar a:hover, .sidebar a.active { background: #2d2e33; color: #f0f0f0; }
     .card { border-radius: 15px; }
     .section { display:none; }
     .section.active { display:block; }
     td{
       text-align: center !important;
     }
-     th{
+      th{
       text-align: center !important;
+      color: rgb(19, 150, 19) !important;
+      font-size: 1.2rem !important;
+      font-weight: bolder !important; 
+    }
+
+    h5{
+        font-size: 2.4rem;!important;
+    }
+
+    h5{
+        font-size: 2.4rem;!important;
+    }
+    .card{
+      background-color: #1b1b1d !important;
+      color: white !important;
+    }
+
+    .card-header{
+      background-color: #525252 !important;
+      color: white !important;
+
+    }
+    .text-muted{
+        color: #ccc !important;
     }
   </style>
 </head>
@@ -109,7 +155,7 @@
         </div>
         </div>
         <div class="card-body table-responsive">
-          <table class="table table-hover">
+          <table class="table table-hover table-striped table-dark">
             <thead>
               <tr>
                 
@@ -168,7 +214,7 @@
                 @endif
                
                 <td>{{$reserva->observation}}</td>
-                <td>  
+                <td class="d-flex justify-content-center gap-2">  
                   <form action="{{ route('admin_atendido_state', ['id' => $reserva->id]) }}" method="post" style="display:inline-block;">
                     @csrf
                     @method('POST')
@@ -209,7 +255,7 @@
       
         </div>
         <div class="card-body table-responsive">
-          <table class="table table-hover">
+          <table class="table table-hover table-striped table-dark">
             <thead>
               <tr>
                 
@@ -293,8 +339,8 @@
         <h2 class="mb-4">Reservas</h2>
         <div class="card">
           <div class="card-body table-responsive">
-              <div class="card-body table-responsive">
-          <table class="table table-hover">
+             
+          <table class="table table-hover table-striped table-dark">
             <thead>
               <tr>
                 
@@ -371,8 +417,7 @@
               @endforeach
             </tbody>
           </table>
-        </div>
-          </div>
+        </div>          
         </div>
       </div>
 
@@ -382,7 +427,7 @@
         <div class="card">
           <div class="card-body table-responsive">
               <div class="card-body table-responsive">
-          <table class="table table-hover">
+          <table class="table table-hover table-striped table-dark">
             <thead>
               <tr>
                 <th>Cliente</th>
@@ -451,8 +496,8 @@
                 <td ><a class="badge bg-danger p-2">{{$reserva_pendiente->state}}</a></td>
                 @endif
                 <td>{{$reserva_pendiente->observation}}</td>
-                 <td>                   
-                    <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-check-square"></i></button>
+                 <td class="d-flex justify-content-center gap-2">                   
+                    <button type="submit" class="btn btn-sm btn-success" data-bs-toggle="tooltip" data-bs-placement="top" title="Confirmar"><i class="bi bi-check-square"></i></button>
                   </form>            
                     <form action="{{ route('admin_edit_reserva', ['id' => $reserva_pendiente->id]) }}" method="get" style="display:inline-block;">     
                     @csrf
@@ -485,8 +530,8 @@
         <div class="card-header d-flex justify-content-between align-items-center">
           
         </div>
-        <div class="card-body table-responsive">
-          <table class="table table-hover">
+        <div class="card-body table-responsive bg-dark">
+          <table class="table table-hover table-striped table-dark">
             <thead>
               <tr>
                 <th>Cliente</th>
@@ -592,7 +637,7 @@
 <!-- MODAL -->
 <div class="modal fade" id="reservaModal">
   <div class="modal-dialog">
-    <div class="modal-content">
+    <div class="modal-content bg-dark text-white">
       <div class="modal-header">
         <h5 class="modal-title">Crear Reserva</h5>
         <button class="btn-close" data-bs-dismiss="modal"></button>
