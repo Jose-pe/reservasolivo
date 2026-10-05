@@ -349,7 +349,10 @@
         </div>
         <div class="col-12 col-md-6 d-flex flex-column align-items-center align-self-md-center align-items-md-end">
           <ul class="list-unstyled mb-0">
-           <a class="link-dark" href="{{route('libro-reclamaciones.create')}}"> <li> <i class="fa-solid fa-plus me-2"></i>Libro de Reclamaciones</li></a>
+           <a class="link-dark" href="{{route('libro-reclamaciones.create')}}"> <li> <i class="fa-solid fa-book-open me-2"></i>Libro de Reclamaciones</li></a>
+            <li class="mt-2">
+          <img src="/img/libro-de-reclamaciones.webp" alt="Libro de reclamaciones" class="img-fluid" style="max-width: 95px;">
+         </li>
           </ul>
         </div>
     </div>

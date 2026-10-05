@@ -313,10 +313,10 @@ class ReservaController extends Controller
         */
     }
 
-    $reservas = $query->orderBy('reservation_date', 'desc')->get();   // Ejecutamos la consulta
+         $reservas = $query->orderBy('reservation_date', 'asc')->orderBy('reservation_time', 'asc')->get();   // Ejecutamos la consulta
     
 
-    return view('admin_filtros_dashboard', compact('reservas'));
+        return view('admin_filtros_dashboard', compact('reservas'));
     }
 
     public function admin_filtrar_etiqueta(Request $request){
@@ -464,10 +464,10 @@ class ReservaController extends Controller
         */
     }
 
-    $reservas = $query->orderBy('reservation_date', 'desc')->get();   // Ejecutamos la consulta
+        $reservas = $query->orderBy('reservation_date', 'asc')->orderBy('reservation_time', 'asc')->get();    // Ejecutamos la consulta
     
 
-    return view('super_admin_table_reservas', compact('reservas'));
+        return view('super_admin_table_reservas', compact('reservas'));
     }
 
      public function super_admin_filtrar_email(Request $request){
